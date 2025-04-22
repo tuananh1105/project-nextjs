@@ -12,8 +12,11 @@ const useAuthMutation = () => {
         throw new Error("Đã xảy ra lỗi", { cause: error });
       }
     },
-    onSuccess: async () => {
+    onSuccess: async (data) => {
       toast("Đăng ký thành công!");
+      if (data.token) {
+        localStorage.setItem("token", data.token);
+      }
     },
   });
 
@@ -21,6 +24,7 @@ const useAuthMutation = () => {
     mutationFn: async (user: Login) => {
       try {
         const res = await instance.post<Login>("/signin", user);
+        localStorage.setItem("user", JSON.stringify(res.data));
         return res.data;
       } catch (error) {
         throw new Error("Đã xảy ra lỗi", { cause: error });

@@ -1,7 +1,19 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { ShoppingCart } from "@medusajs/icons";
 
 export default function Header() {
+  const [token, setToken] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setToken(true);
+    }
+  }, []);
   return (
     <header className="bg-white dark:bg-gray-900">
       <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
@@ -79,21 +91,34 @@ export default function Header() {
 
             <div className="flex items-center gap-4">
               <div className="sm:flex sm:gap-4">
-                <Link
-                  className="rounded-md bg-black px-5 py-2.5 text-sm font-medium text-white shadow-sm dark:hover:bg-gray-500"
-                  href="/website/login"
-                >
-                  Login
-                </Link>
+                {token ? (
+                  <div className="flex gap-4">
+                    <div className="mt-3">
+                      <ShoppingCart className="text-2xl cursor-pointer" />
+                    </div>
+                    <div className="rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-black dark:bg-gray-800 dark:text-white dark:hover:text-white/75 cursor-pointer">
+                      Đăng xuất
+                    </div>
+                  </div>
+                ) : (
+                  <>
+                    <Link
+                      className="rounded-md bg-black px-5 py-2.5 text-sm font-medium text-white shadow-sm dark:hover:bg-gray-500"
+                      href="/website/login"
+                    >
+                      Login
+                    </Link>
 
-                <div className="hidden sm:flex">
-                  <Link
-                    className="rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-black dark:bg-gray-800 dark:text-white dark:hover:text-white/75"
-                    href="/website/register"
-                  >
-                    Register
-                  </Link>
-                </div>
+                    <div className="hidden sm:flex">
+                      <Link
+                        className="rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-black dark:bg-gray-800 dark:text-white dark:hover:text-white/75"
+                        href="/website/register"
+                      >
+                        Register
+                      </Link>
+                    </div>
+                  </>
+                )}
               </div>
 
               <div className="block md:hidden">

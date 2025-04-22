@@ -10,6 +10,7 @@ type Categories = {
 }
 
 type Variants ={
+    _id: string
     size: string;
     color: string;
     countInStock: number;

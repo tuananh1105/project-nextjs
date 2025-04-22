@@ -1,6 +1,7 @@
 import { useFetchProduct } from "@/data/products/useProductList";
 import CurrencyVND from "@/utils/helper";
 import Image from "next/image";
+import Link from "next/link";
 
 const PAGESIZE = 10;
 
@@ -63,7 +64,9 @@ const ProductCart = () => {
 
               <div className="mt-3 flex justify-between text-sm">
                 <h3 className="text-gray-900 group-hover:underline group-hover:underline-offset-4">
-                  {product.name}
+                  <Link href={`website/product/${product.slug}`}>
+                    {product.name}
+                  </Link>
                 </h3>
 
                 <p className="text-gray-900">
