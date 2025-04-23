@@ -44,7 +44,7 @@ const ModalSizeGuide = ({
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 3, scale: 1 }}
               exit={{ opacity: 0, scale: 0.1 }}
-              transition={{ duration: 0.3 }}
+              transition={{ duration: 0.1 }}
               className="bg-white rounded-xl shadow-lg w-full"
             >
               <FocusModal.Header>

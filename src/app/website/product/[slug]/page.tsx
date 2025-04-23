@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { Minus, Plus, ShoppingBag } from "@medusajs/icons";
 import useLogicCart from "@/hooks/useLogicCart";
+import { Button } from "@/components/ui/custom-button";
 
 export default function ProductDetail() {
   const {
@@ -153,13 +154,11 @@ export default function ProductDetail() {
                 <Plus className="cursor-pointer" />
               </button>
             </div>
-            <button
+            <Button
               onClick={handleAddToCart}
-              className="flex items-center justify-center gap-2 bg-[#FBCA58] hover:bg-[#FAB005] text-black w-full px-6 py-3 rounded-full transition"
-            >
-              Thêm vào giỏ
-              <ShoppingBag />
-            </button>
+              name="Thêm vào giỏ"
+              icon={ShoppingBag}
+            />
           </div>
         </div>
       </div>

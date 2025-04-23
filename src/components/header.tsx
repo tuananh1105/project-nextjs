@@ -3,10 +3,16 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { ShoppingCart } from "@medusajs/icons";
+import useLogicCart from "@/hooks/useLogicCart";
+import { useFetchCart } from "@/data/cart/useFetchCart";
+import { Cart } from "./ui/icon";
 
 export default function Header() {
   const [token, setToken] = useState(false);
+
+  const { userId } = useLogicCart();
+
+  const { data: cart } = useFetchCart(userId);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -93,8 +99,13 @@ export default function Header() {
               <div className="sm:flex sm:gap-4">
                 {token ? (
                   <div className="flex gap-4">
-                    <div className="mt-3">
-                      <ShoppingCart className="text-2xl cursor-pointer" />
+                    <div className="mt-3 relative">
+                      <Link href={"/website/cart"}>
+                        <Cart />
+                      </Link>
+                      <span className="absolute top-[-5px] left-3 bg-red-500 text-white rounded-full w-3 h-3 flex items-center justify-center text-xs">
+                        {cart?.products.length}
+                      </span>
                     </div>
                     <div className="rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-black dark:bg-gray-800 dark:text-white dark:hover:text-white/75 cursor-pointer">
                       Đăng xuất

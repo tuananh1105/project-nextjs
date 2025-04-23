@@ -14,6 +14,7 @@ type Variants ={
     size: string;
     color: string;
     countInStock: number;
+    imageVariant: string;
     price: number;
     weight: number;
     sku: string;

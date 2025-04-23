@@ -17,9 +17,11 @@ export const fetchFindOneProduct = async (slug: string) => {
 };
 
 export const useFetchDetailProduct = (slug: string) => {
+  const isValidSlug = !!slug && slug !== "undefined";
   return useQuery({
     queryKey: ["PRODUCTS", slug],
     queryFn: () => fetchFindOneProduct(slug),
+    enabled: isValidSlug,
     staleTime: 5 * 1000 * 60,
   });
 };

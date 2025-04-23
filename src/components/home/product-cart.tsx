@@ -19,7 +19,7 @@ const ProductCart = () => {
   if (error) return <div>Error</div>;
   return (
     <div className="max-w-[1200px] m-auto grid grid-cols-4 gap-y-10">
-      {listProduct?.data.map((product) => (
+      {listProduct?.data.map((product: Product) => (
         <div className="flex" key={product._id}>
           <div className="group block">
             <div className="">

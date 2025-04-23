@@ -3,7 +3,11 @@ type ProductCart = {
     variantId: string;
     quantity: number | string;
     totalPrice: string | number;
-    priceAtTime: number
+    priceAtTime: number;
+    color?: string;
+    image?: string;
+    size?: string;
+    name?: string;
 }
 
 type Cart = {

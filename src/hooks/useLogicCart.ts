@@ -1,5 +1,6 @@
 import useCartMutation from "@/data/cart/useMutationCart";
 import { useFetchDetailProduct } from "@/data/products/useDetailProduct";
+import { getUserId } from "@/lib/get-userId";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 
@@ -15,9 +16,8 @@ const useLogicCart = () => {
         error,
       } = useFetchDetailProduct(String(slug));
 
-      const user = JSON.parse(localStorage.getItem("user") || "{}");
-
-      const userId = user.user._id || "";
+      const userId = getUserId();
+      
       const variant =
       productDetail?.product.variants.find(
         (v) =>

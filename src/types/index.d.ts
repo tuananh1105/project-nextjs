@@ -4,4 +4,10 @@ type Tab = {
     label: string
     image: string
   }
+
+type ButtonProps = {
+  name: string;
+  icon: FC;
+  onClick: () => void
+}
   

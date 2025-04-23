@@ -4,7 +4,6 @@ type Register = {
     email: string;
     password: string;
     confirmPassword : string;
-    token: string;
 }
 
 type Login = {

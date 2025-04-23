@@ -15,13 +15,15 @@ export const fetchProduct = async (params: ProductParams) => {
     return res.data;
   } catch (error) {
     console.log("error:", error);
+    throw error;
   }
 };
 
 export const useFetchProduct = (params: ProductParams) => {
   return useQuery({
-    queryKey: ["PRODUCTS", params],
-    queryFn: () => fetchProduct(params),
+    queryKey: ["PRODUCTS", params ?? {}],
+    queryFn: () => fetchProduct(params ?? {}),
+    enabled: !!params,
     staleTime: 5 * 1000 * 60,
   });
 };

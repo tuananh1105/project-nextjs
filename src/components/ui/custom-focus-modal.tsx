@@ -2,7 +2,7 @@ import { XMark } from "@medusajs/icons";
 import { clx, IconButton } from "@medusajs/ui";
 import * as FocusModalPrimitives from "@radix-ui/react-dialog";
 import * as React from "react";
-
+import { motion } from "framer-motion";
 /**
  * @prop defaultOpen - Whether the modal is opened by default.
  * @prop open - Whether the modal is opened.
@@ -67,15 +67,22 @@ const FocusModalContent = React.forwardRef<
   return (
     <FocusModalPortal {...portalProps}>
       <FocusModalOverlay {...overlayProps} />
-      <FocusModalPrimitives.Content
-        ref={ref}
-        className={clx(
-          "fixed inset-2 z-10 flex flex-col overflow-hidden rounded-lg bg-white shadow-elevation-modal outline-none",
-          "duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:slide-in-from-bottom-2 data-[state=open]:slide-in-from-bottom-0",
-          className
-        )}
-        {...props}
-      />
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95, y: 20 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.95, y: 20 }}
+        transition={{ duration: 0 }}
+        className="w-full"
+      >
+        <FocusModalPrimitives.Content
+          ref={ref}
+          className={clx(
+            "fixed inset-2 z-10 flex flex-col overflow-hidden rounded-lg bg-white shadow-elevation-modal outline-none",
+            className
+          )}
+          {...props}
+        />
+      </motion.div>
     </FocusModalPortal>
   );
 });
@@ -106,7 +113,7 @@ const FocusModalHeader = React.forwardRef<
       {/* Dấu X nằm bên phải */}
       <FocusModalPrimitives.Close asChild>
         <IconButton
-          className="border rounded-full border-gray-300 hover:bg-gray-300 "
+          className="border rounded-full p-2 border-gray-300 hover:bg-gray-300 "
           size="base"
           type="button"
           variant="transparent"
