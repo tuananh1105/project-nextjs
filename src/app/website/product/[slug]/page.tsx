@@ -69,7 +69,7 @@ export default function ProductDetail() {
           <div className="flex items-center justify-center">
             {selectedImage && (
               <Image
-                src={selectedImage || productDetail?.product.image || ""}
+                src={selectedImage}
                 alt="selected-product"
                 width={500}
                 height={500}

@@ -17,7 +17,7 @@ const useCartMutation = () => {
     },
     onError: (error: { response: { cart: { error_code: string } } }) => {
       console.log("error:", error);
-      toast("Thêm vào giỏ hàng không thành công!");
+      toast.error("Thêm vào giỏ hàng không thành công!");
     },
   });
 
@@ -38,11 +38,67 @@ const useCartMutation = () => {
     },
     onError: (error: { response: { cart: { error_code: string } } }) => {
       console.log("error:", error);
-      toast("Xoá giỏ hàng không thành công!");
+      toast.error("Xoá giỏ hàng không thành công!");
     },
   });
 
-  return { createCart, deleteCart };
+  const increaseQuantity = useMutation({
+    mutationFn: ({
+      userId,
+      variantId,
+      productId,
+    }: {
+      userId: string;
+      variantId: string;
+      productId: string;
+    }) =>
+      instance.patch("/cart/increase-quantity", {
+        userId,
+        variantId,
+        productId,
+      }),
+    onSuccess: (result) => {
+      toast("Đã tăng số lượng sản phẩm!");
+      queryClient.invalidateQueries({
+        queryKey: ["CARTS"],
+      });
+      return result;
+    },
+    onError: (error: { response: { cart: { error_code: string } } }) => {
+      console.log("error:", error);
+      toast.error("Tăng số lượng sản phẩm không thành công!");
+    },
+  });
+
+  const decreaseQuantity = useMutation({
+    mutationFn: ({
+      userId,
+      variantId,
+      productId,
+    }: {
+      userId: string;
+      variantId: string;
+      productId: string;
+    }) =>
+      instance.patch("/cart/decrease-quantity", {
+        userId,
+        variantId,
+        productId,
+      }),
+    onSuccess: (result) => {
+      toast("Đã giảm số lượng sản phẩm!");
+      queryClient.invalidateQueries({
+        queryKey: ["CARTS"],
+      });
+      return result;
+    },
+    onError: (error: { response: { cart: { error_code: string } } }) => {
+      console.log("error:", error);
+      toast.error("Giảm số lượng sản phẩm không thành công!");
+    },
+  });
+
+  return { createCart, deleteCart, increaseQuantity, decreaseQuantity };
 };
 
 export default useCartMutation;

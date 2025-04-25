@@ -61,3 +61,12 @@ body {
   transform: translate(-50%, -50%);
   font-size: 10px;
 }
+
+.scrollbar-hide {
+  -ms-overflow-style: none; 
+  scrollbar-width: none; 
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; 
+}
