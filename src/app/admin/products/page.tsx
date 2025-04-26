@@ -1,3 +1,5 @@
-export function ProductList() {
+"use client";
+
+export default function ProductList() {
   return <div>Product</div>;
 }

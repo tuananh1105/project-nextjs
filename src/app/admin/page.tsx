@@ -1,3 +1,10 @@
-export default function DashboardPage() {
-  return <h1>Admin Dashboard</h1>;
-}
+const DashBoard = () => {
+  return (
+    <div>
+      Dashboard
+      <h1>kjjsd</h1>
+    </div>
+  );
+};
+
+export default DashBoard;

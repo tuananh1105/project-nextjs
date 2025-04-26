@@ -1,15 +1,28 @@
-// app/admin/layout.tsx
-import React from "react";
+"use client";
 
-export default function AdminLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+import CustomHeader from "@/components/dashboard/header";
+import Sidebar from "@/components/dashboard/layout-admin";
+import { Layout } from "antd";
+
+const { Content, Footer } = Layout;
+
+const DashBoardPage = ({ children }: { children: React.ReactNode }) => {
+  // const {
+  //   token: { colorBgContainer },
+  // } = theme.useToken();
+
   return (
-    <div>
-      <header className="bg-gray-800 text-white p-4">Admin Header</header>
-      <main className="">{children}</main>
-    </div>
+    <Layout style={{ minHeight: "100vh" }}>
+      <Sidebar />
+      <Layout>
+        <CustomHeader />
+        <Content style={{ margin: "16px" }}>{children}</Content>
+        <Footer style={{ textAlign: "center" }}>
+          Ant Design ©{new Date().getFullYear()} Created by Ant UED
+        </Footer>
+      </Layout>
+    </Layout>
   );
-}
+};
+
+export default DashBoardPage;
