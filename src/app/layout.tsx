@@ -31,7 +31,7 @@ export default function RootLayout({
       >
         <Providers>
           <ToastContainer />
-          <main className="flex-1 ">{children}</main>
+          <main className="flex-1">{children}</main>
         </Providers>
       </body>
     </html>

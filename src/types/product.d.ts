@@ -39,3 +39,14 @@ type MetaData = {
     currentPage: number
   }
 
+type ProductAdmin = {
+    _id: string
+    slug: string
+    key: React.Key;
+    name: string;
+    category: string;
+    price: number;
+    image: string;
+    description: string;
+ }
+

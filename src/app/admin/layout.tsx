@@ -7,10 +7,6 @@ import { Layout } from "antd";
 const { Content, Footer } = Layout;
 
 const DashBoardPage = ({ children }: { children: React.ReactNode }) => {
-  // const {
-  //   token: { colorBgContainer },
-  // } = theme.useToken();
-
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Sidebar />

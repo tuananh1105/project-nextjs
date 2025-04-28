@@ -1,3 +1,5 @@
+import { createStyles } from "antd-style";
+
 const CurrencyVND = ({ amount }: { amount: number }) => {
   const formatVND = (amount: number) => {
     return new Intl.NumberFormat("vi-VN", {
@@ -36,3 +38,23 @@ export const CreateSlugByTitle = (title: string) => {
   slug = slug.replace(/\@\-|\-\@|\@/gi, "");
   return slug;
 };
+
+export const capitalizeFirstLetter = (str: string) => {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+};
+
+const antCls = ".ant";
+export const useStyle = createStyles(({ css }) => ({
+  customTable: css`
+    ${antCls}-table {
+      ${antCls}-table-container {
+        ${antCls}-table-body,
+        ${antCls}-table-content {
+          scrollbar-width: thin;
+          scrollbar-color: #eaeaea transparent;
+          scrollbar-gutter: stable;
+        }
+      }
+    }
+  `,
+}));

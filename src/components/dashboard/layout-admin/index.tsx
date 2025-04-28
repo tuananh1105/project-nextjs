@@ -1,8 +1,8 @@
 import {
-  DesktopOutlined,
   FileOutlined,
   PieChartOutlined,
-  TeamOutlined,
+  ProductOutlined,
+  UnorderedListOutlined,
   UserOutlined,
 } from "@ant-design/icons";
 import { Image, Menu, MenuProps } from "antd";
@@ -28,16 +28,17 @@ function getItem(
 
 const items: MenuItem[] = [
   getItem("Dashboard", "/admin", <PieChartOutlined />),
-  getItem("Option 2", "/admin/option2", <DesktopOutlined />),
-  getItem("Product", "sub1", <UserOutlined />, [
+  getItem("Users", "/admin/option2", <UserOutlined />),
+  getItem("Categories", "sub2", <UnorderedListOutlined />, [
+    getItem("Category List", "/admin/categories"),
+    getItem("Ceate Category", "/admin/team2"),
+  ]),
+  getItem("Product", "sub1", <ProductOutlined />, [
     getItem("Product List", "/admin/products"),
     getItem("Create Product", "/admin/products/create"),
     getItem("Alex", "/admin/alex"),
   ]),
-  getItem("Team", "sub2", <TeamOutlined />, [
-    getItem("Team 1", "/admin/team1"),
-    getItem("Team 2", "/admin/team2"),
-  ]),
+
   getItem("Files", "/admin/files", <FileOutlined />),
 ];
 
