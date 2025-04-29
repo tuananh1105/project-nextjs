@@ -3,12 +3,6 @@ type ProductParams = {
     limit: number
 }
 
-type Categories = {
-    name: string;
-    slug: string;
-    status: string;
-}
-
 type Variants ={
     _id: string
     size: string;

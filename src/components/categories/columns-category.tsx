@@ -1,26 +1,23 @@
 import DropdownMenu from "@/components/ui/custom-dropdown-menu";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import { TableColumnsType } from "antd";
+import { TableColumnsType, Tag } from "antd";
+import Link from "next/link";
 
-const handleDelete = (_id: string) => {
-  console.log("Delete product with id:", _id);
-};
-
-const handleEdit = (_id: string) => {
-  console.log("Edit product with id:", _id);
-};
-
-export const ProductColumns: TableColumnsType<Categories> = [
+export const CategoryColumns = ({
+  handleDelete,
+}: {
+  handleDelete: (_id: string) => void;
+}): TableColumnsType<Categories> => [
   {
     title: "",
     key: "menu",
-    render: (record) => {
-      const { id } = record;
+    render: (__, record) => {
+      const { _id } = record;
       const menu = [
         {
           key: "2",
           label: (
-            <button className="text-red-400" onClick={() => handleDelete(id)}>
+            <button className="text-red-400" onClick={() => handleDelete(_id)}>
               Delete
             </button>
           ),
@@ -28,7 +25,7 @@ export const ProductColumns: TableColumnsType<Categories> = [
         },
         {
           key: "3",
-          label: <button onClick={() => handleEdit(id)}>Edit</button>,
+          label: <Link href={`/admin/categories/${_id}`}>Edit</Link>,
           icon: <EditOutlined />,
         },
       ];
@@ -54,6 +51,10 @@ export const ProductColumns: TableColumnsType<Categories> = [
   {
     title: "Status",
     dataIndex: "status",
-    render: (status) => <strong>{status}</strong>,
+    render: (status) => (
+      <div>
+        <Tag color={status === "SHOW" ? "success" : "error"}>{status}</Tag>
+      </div>
+    ),
   },
 ];

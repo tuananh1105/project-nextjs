@@ -1,55 +1,57 @@
 "use client";
 
-import { CategoryColumns } from "@/components/categories/columns-category";
-import { useFetchCategory } from "@/data/categories/useCategoryList";
-import useCategoryMutation from "@/data/categories/useCategoryMutation";
+import { BlogColumns } from "@/components/blog/columns-blog";
+import { useFetchBlog } from "@/data/blog/useBlogList";
 import { useStyle } from "@/utils/helper";
 import { Button, Table, TablePaginationConfig } from "antd";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 
-export default function CategoryList() {
+export default function BlogList() {
   const { styles } = useStyle();
-
   const [pagination, setPagination] = useState({
     current: 1,
     pageSize: 10,
   });
 
-  const { data: categoryList, isLoading } = useFetchCategory({
+  const { data: blogList, isLoading } = useFetchBlog({
     page: pagination.current,
     limit: pagination.pageSize,
   });
 
-  const { deleteCategory } = useCategoryMutation();
+  console.log("blogList", blogList);
 
   const handleDelete = async (_id: string) => {
-    await deleteCategory.mutate(_id);
+    console.log("id", _id);
   };
 
-  const columns = CategoryColumns({ handleDelete });
+  const columns = BlogColumns({ handleDelete });
 
-  const categories = useMemo(() => {
-    if (Array.isArray(categoryList)) {
-      return categoryList.map((item) => ({
+  const blog = useMemo(() => {
+    if (Array.isArray(blogList)) {
+      return blogList.map((item) => ({
         _id: item._id,
         key: item._id,
-        slug: item.slug,
-        name: item.name,
-        status: item.status,
+        title: item.name,
+        tags: item.tag,
+        author: item.author,
+        thumbnail: item.thumbnail,
+        description: item.description,
       }));
     }
-    if (categoryList?.data && Array.isArray(categoryList.data)) {
-      return categoryList.data.map((item) => ({
+    if (blogList?.data && Array.isArray(blogList.data)) {
+      return blogList.data.map((item) => ({
         _id: item._id,
         key: item._id,
-        slug: item.slug,
-        name: item.name,
-        status: item.status,
+        title: item.title,
+        author: item.author,
+        tags: item.tags,
+        thumbnail: item.thumbnail,
+        description: item.description,
       }));
     }
     return [];
-  }, [categoryList]);
+  }, [blogList]);
 
   const handleTableChange = (paginationInfo: TablePaginationConfig) => {
     setPagination({
@@ -61,20 +63,20 @@ export default function CategoryList() {
   return (
     <div>
       <div className="flex justify-between">
-        <p className="text-xl font-semibold">Danh sách danh mục</p>
-        <Link href={"/admin/categories/create"}>
-          <Button>Thêm danh mục</Button>
+        <p className="text-xl font-semibold">Danh sách tin tức</p>
+        <Link href={"/admin/blogs/create"}>
+          <Button>Thêm tin tức</Button>
         </Link>
       </div>
       <div className="bg-white p-3 rounded-lg mt-3">
-        <Table<Categories>
+        <Table<Blog>
           className={styles.customTable}
           columns={columns}
-          dataSource={categories}
+          dataSource={blog}
           pagination={{
             current: pagination.current,
             pageSize: pagination.pageSize,
-            total: categoryList?.meta?.totalItems ?? 0,
+            total: blogList?.meta?.totalItems ?? 0,
             showSizeChanger: true,
             pageSizeOptions: [2, 5, 10, 20],
           }}

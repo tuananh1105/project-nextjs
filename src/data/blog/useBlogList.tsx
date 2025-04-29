@@ -1,12 +1,12 @@
 import instance from "@/lib/axios-instance";
 import { useQuery } from "@tanstack/react-query";
 
-export const fetchCategory = async (params: CategoryParams) => {
+export const fetchBlog = async (params: BlogParams) => {
   try {
     const res = await instance.get<{
-      data: Categories[];
+      data: Blog[];
       meta: MetaData;
-    }>("/categories", { params });
+    }>("/posts", { params });
     if (res.status !== 200) {
       throw new Error("Không có dữ liệu!");
     }
@@ -16,10 +16,10 @@ export const fetchCategory = async (params: CategoryParams) => {
   }
 };
 
-export const useFetchCategory = (params: CategoryParams) => {
+export const useFetchBlog = (params: BlogParams) => {
   return useQuery({
-    queryKey: ["CATEGORIES", params ?? {}],
-    queryFn: () => fetchCategory(params ?? {}),
+    queryKey: ["BLOGS", params],
+    queryFn: () => fetchBlog(params),
     staleTime: 6 * 1000 * 60,
   });
 };
