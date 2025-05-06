@@ -1,6 +1,6 @@
 "use client";
 
-export default function AddressList() {
+export default function AccountList() {
   return (
     <div>
       sđsj

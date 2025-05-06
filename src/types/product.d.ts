@@ -44,3 +44,9 @@ type ProductAdmin = {
     description: string;
  }
 
+ type ListFileImage = {
+    url?: string | null
+    name?: string
+    size?: number
+  }
+
