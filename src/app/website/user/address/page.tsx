@@ -1,5 +1,6 @@
 "use client";
 
+import ModalAddAddress from "@/components/address/modal-add-address";
 import ModalDeleteAddress from "@/components/address/modal-delete-address";
 import useAddressMutation from "@/data/address/useAddressMutation";
 import { useFetchAddressByUserId } from "@/data/address/useFetchAddress";
@@ -10,6 +11,7 @@ import { useState } from "react";
 
 export default function AddressList() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
   const userId = getUserId();
 
@@ -42,13 +44,25 @@ export default function AddressList() {
     setIsModalOpen(false);
   };
 
+  const handleOpenModalAdd = () => {
+    setIsAddModalOpen(true);
+  };
+
+  const handleCloseModalAdd = () => {
+    setIsAddModalOpen(false);
+  };
+
   if (isLoading) return <div>Loading...</div>;
 
   return (
     <div className="">
       <div className="bg-white p-6 border-b border-gray-300 flex justify-between">
         <p className="text-xl">Địa chỉ của tôi</p>
-        <Button>Thêm địa chỉ mới</Button>
+        <Button onClick={handleOpenModalAdd}>Thêm địa chỉ mới</Button>
+        <ModalAddAddress
+          isOpen={isAddModalOpen}
+          isClose={handleCloseModalAdd}
+        />
       </div>
       <div className="bg-white p-6">
         <p className="text-xl">Địa chỉ</p>
@@ -66,16 +80,13 @@ export default function AddressList() {
                   </p>
                   <span className="text-sm text-gray-500">
                     {address.address}
-                    <br /> Xã {address.ward}, Huyện {address.district},{" "}
-                    {address.city}
+                    <br /> {address.ward}, {address.district}, {address.city}
                   </span>
                   {address.isDefault === true ? (
                     <p className="border w-20 text-center border-red-400 text-red-400 text-sm mt-2">
                       Mặc định
                     </p>
-                  ) : (
-                    ""
-                  )}
+                  ) : null}
                 </div>
                 <div>
                   <div className="flex gap-3 justify-end">
@@ -96,9 +107,7 @@ export default function AddressList() {
                           }
                         />
                       </>
-                    ) : (
-                      ""
-                    )}
+                    ) : null}
                   </div>
 
                   <p

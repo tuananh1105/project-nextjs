@@ -18,7 +18,47 @@ const useAddressMutation = () => {
       toast.error("Xoá địa chỉ không thành công!");
     },
   });
-  return { deleteAddress };
+
+  const createAddress = useMutation({
+    mutationFn: async ({
+      userId,
+      name,
+      phone,
+      city,
+      district,
+      ward,
+      address,
+    }: {
+      userId: string;
+      name: string;
+      phone: string;
+      city: string;
+      district: string;
+      ward: string;
+      address: string;
+    }) =>
+      instance.post("create-customer", {
+        userId,
+        address,
+        city,
+        district,
+        name,
+        phone,
+        ward,
+      }),
+    onSuccess: (result) => {
+      toast("Thêm địa chỉ thành công!");
+      queryClient.invalidateQueries({
+        queryKey: ["ADDRESS"],
+      });
+      return result;
+    },
+    onError: (error: { response: { cart: { error_code: string } } }) => {
+      console.log("error:", error);
+      toast.error("Thêm địa chỉ không thành công!");
+    },
+  });
+  return { deleteAddress, createAddress };
 };
 
 export default useAddressMutation;
