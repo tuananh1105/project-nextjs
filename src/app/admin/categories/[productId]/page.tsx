@@ -19,7 +19,7 @@ export default function EditCategory() {
         status: category.category.status,
       });
     }
-  }, [category]);
+  }, [category, form]);
 
   const { editCategory } = useCategoryMutation();
 
