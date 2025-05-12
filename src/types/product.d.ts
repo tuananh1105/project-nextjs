@@ -3,16 +3,14 @@ type ProductParams = {
     limit: number
 }
 
-type Variants ={
-    _id: string
-    size: string;
-    color: string;
-    countInStock: number;
-    imageVariant: string;
-    price: number;
-    weight: number;
-    sku: string;
-}
+type Variant = {
+  attributes: Record<string, string>;
+  price: number;
+  countInStock: number;
+  sku: string;
+  weight: number;
+};
+
 
 type Product = {
    _id: string;
@@ -49,4 +47,19 @@ type ProductAdmin = {
     name?: string
     size?: number
   }
+
+
+  type ProductCreate = {
+     name: string;
+     slug: string;
+     originalPrice: string;
+     category: Categories;
+     price: number;
+     image: string;
+     gallery: string[];
+     description: string;
+     detaildescription: string;
+     hasVariants: boolean, 
+     variants: Variants[];
+ }
 
