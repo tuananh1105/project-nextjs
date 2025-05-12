@@ -2,6 +2,7 @@ import {
   FileOutlined,
   PieChartOutlined,
   ProductOutlined,
+  ShopOutlined,
   TwitchFilled,
   UnorderedListOutlined,
   UserOutlined,
@@ -37,6 +38,13 @@ const items: MenuItem[] = [
   getItem("Product", "sub1", <ProductOutlined />, [
     getItem("Product List", "/admin/products"),
     getItem("Create Product", "/admin/products/create"),
+  ]),
+  getItem("Order", "sub4", <ShopOutlined />, [
+    getItem("Order Pending", "/admin/order"),
+    getItem("Order Shipped ", "/admin/order/shipped"),
+    getItem("Order Received ", "/admin/order/received"),
+    getItem("Order Delivered ", "/admin/order/delivered"),
+    getItem("Order Canceled ", "/admin/order/canceled"),
   ]),
   getItem("BLog", "sub3", <TwitchFilled />, [
     getItem("BLog List", "/admin/blogs"),

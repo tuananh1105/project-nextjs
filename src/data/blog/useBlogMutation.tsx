@@ -19,13 +19,26 @@ const useBlogMutation = () => {
       });
       return result;
     },
+  });
+
+  const deleteBlog = useMutation({
+    mutationFn: async (_id: string) => {
+      await instance.delete(`/posts/${_id}`);
+    },
+    onSuccess: async (result) => {
+      toast("Xoá tin tức thành công!");
+      queryClient.invalidateQueries({
+        queryKey: ["BLOGS"],
+      });
+      return result;
+    },
     onError: (error: { response: { cart: { error_code: string } } }) => {
       console.log("error:", error);
-      toast.error("Thêm tin tức không thành công!");
+      toast.error("Xoá tin tức không thành công!");
     },
   });
 
-  return { createBlog };
+  return { createBlog, deleteBlog };
 };
 
 export default useBlogMutation;

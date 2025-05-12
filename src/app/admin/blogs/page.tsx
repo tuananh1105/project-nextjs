@@ -2,6 +2,7 @@
 
 import { BlogColumns } from "@/components/blog/columns-blog";
 import { useFetchBlog } from "@/data/blog/useBlogList";
+import useBlogMutation from "@/data/blog/useBlogMutation";
 import { useStyle } from "@/utils/helper";
 import { Button, Table, TablePaginationConfig } from "antd";
 import Link from "next/link";
@@ -19,10 +20,10 @@ export default function BlogList() {
     limit: pagination.pageSize,
   });
 
-  console.log("blogList", blogList);
+  const { deleteBlog } = useBlogMutation();
 
   const handleDelete = async (_id: string) => {
-    console.log("id", _id);
+    await deleteBlog.mutate(_id);
   };
 
   const columns = BlogColumns({ handleDelete });

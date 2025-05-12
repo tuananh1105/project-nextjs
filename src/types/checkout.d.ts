@@ -31,3 +31,18 @@ type CreateCheckout = {
     shippingMessageDisplay: string;
     discount: string;
 }
+
+type OrderParams = {
+    page: number
+    limit: number
+}
+
+type OrderList ={
+    _id: string;
+    orderNumber: string;
+    name: string;
+    paymentMethod: string;
+    items: string;
+    totalPrice: number;
+    createdAt: string;
+}

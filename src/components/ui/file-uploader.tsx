@@ -1,56 +1,76 @@
 import React from "react";
 import { InboxOutlined } from "@ant-design/icons";
-import type { UploadProps } from "antd";
 import { message, Upload } from "antd";
+import type { UploadFile, UploadProps } from "antd/es/upload";
+import instance from "@/lib/axios-instance";
 
 const { Dragger } = Upload;
 
-interface FileUploaderProps {
-  actionUrl?: string;
+type FileUploaderProps = {
+  action: string;
+  fieldName?: string;
   multiple?: boolean;
-  uploadText?: string;
-  uploadHint?: string;
-  onChange?: UploadProps["onChange"];
-  onDrop?: UploadProps["onDrop"];
-}
+  headers?: Record<string, string>;
+  onSuccess?: (res: Record<string, unknown>, file: UploadFile) => void;
+  onError?: (error: Error, file: UploadFile) => void;
+};
 
 const FileUploader: React.FC<FileUploaderProps> = ({
-  actionUrl = "https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload",
-  multiple = true,
-  uploadText = "Click or drag file to this area to upload",
-  uploadHint = "Support for a single or bulk upload. Strictly prohibited from uploading company data or other banned files.",
-  onChange,
-  onDrop,
+  action,
+  fieldName = "image",
+  multiple = false,
+  headers = {},
+  onSuccess,
+  onError,
 }) => {
-  const uploadProps: UploadProps = {
-    name: "file",
+  const props: UploadProps = {
+    name: fieldName,
     multiple,
-    action: actionUrl,
-    onChange(info) {
-      const { status } = info.file;
-      if (status !== "uploading") {
-        console.log(info.file, info.fileList);
+    customRequest: async (options) => {
+      const { file, onSuccess: successCb, onError: errorCb } = options;
+
+      const formData = new FormData();
+
+      const files = Array.isArray(file) ? file : [file];
+
+      for (const f of files) {
+        formData.append(fieldName, f as Blob);
       }
-      if (status === "done") {
-        message.success(`${info.file.name} file uploaded successfully.`);
-      } else if (status === "error") {
-        message.error(`${info.file.name} file upload failed.`);
+
+      try {
+        const res = await instance.post(action, formData, {
+          headers: {
+            ...headers,
+            "Content-Type": "multipart/form-data",
+          },
+        });
+
+        if (res.status !== 200) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+
+        message.success(`Upload thành công.`);
+        successCb?.(res.data);
+        onSuccess?.(res.data, file as UploadFile);
+      } catch (err) {
+        const error = err instanceof Error ? err : new Error("Unknown error");
+        console.error("Upload failed:", error);
+        message.error(`Upload thất bại.`);
+        errorCb?.(error);
+        onError?.(error, file as UploadFile);
       }
-      onChange?.(info);
-    },
-    onDrop(e) {
-      console.log("Dropped files", e.dataTransfer.files);
-      onDrop?.(e);
     },
   };
 
   return (
-    <Dragger {...uploadProps}>
+    <Dragger {...props}>
       <p className="ant-upload-drag-icon">
         <InboxOutlined />
       </p>
-      <p className="ant-upload-text">{uploadText}</p>
-      <p className="ant-upload-hint">{uploadHint}</p>
+      <p className="ant-upload-text">Click hoặc kéo ảnh vào đây để upload</p>
+      <p className="ant-upload-hint">
+        Hỗ trợ upload 1 hoặc nhiều ảnh cùng lúc.
+      </p>
     </Dragger>
   );
 };

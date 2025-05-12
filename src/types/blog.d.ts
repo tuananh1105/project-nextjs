@@ -14,12 +14,11 @@ type Blog = {
 
 
 type CreateBlog = {
-    _id: string
     title: string;
     author: string;
     content: string;
     tags: string[];
     gallery: string[];
-    thumbnail: string;
+    thumbnail: string | null;
     description: string;
 }
