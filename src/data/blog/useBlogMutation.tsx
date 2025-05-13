@@ -13,7 +13,7 @@ const useBlogMutation = () => {
     },
     onSuccess: async (result) => {
       router.push("/admin/blogs");
-      toast("Thêm tin tức thành công!");
+      toast.success("Thêm tin tức thành công!");
       queryClient.invalidateQueries({
         queryKey: ["BLOGS"],
       });
@@ -26,7 +26,7 @@ const useBlogMutation = () => {
       await instance.delete(`/posts/${_id}`);
     },
     onSuccess: async (result) => {
-      toast("Xoá tin tức thành công!");
+      toast.success("Xoá tin tức thành công!");
       queryClient.invalidateQueries({
         queryKey: ["BLOGS"],
       });

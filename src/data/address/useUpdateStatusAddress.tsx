@@ -15,7 +15,7 @@ const useUpdateStatusAddress = () => {
       isDefault: boolean;
     }) => instance.put(`/editcustomer/${id}/${userId}`, { isDefault }),
     onSuccess: (result) => {
-      toast("Cập nhật địa chỉ thành mặc định thành công!");
+      toast.success("Cập nhật địa chỉ thành mặc định thành công!");
       queryClient.invalidateQueries({
         queryKey: ["ADDRESS"],
       });

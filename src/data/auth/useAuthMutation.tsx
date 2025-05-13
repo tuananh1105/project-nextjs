@@ -13,7 +13,7 @@ const useAuthMutation = () => {
       }
     },
     onSuccess: async () => {
-      toast("Đăng ký thành công!");
+      toast.success("Đăng ký thành công!");
     },
   });
 
@@ -28,7 +28,7 @@ const useAuthMutation = () => {
       }
     },
     onSuccess: async () => {
-      toast("Đăng nhập thành công!");
+      toast.success("Đăng nhập thành công!");
     },
   });
 

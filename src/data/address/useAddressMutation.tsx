@@ -7,7 +7,7 @@ const useAddressMutation = () => {
   const deleteAddress = useMutation({
     mutationFn: async (id: string) => instance.delete(`/delete-customer/${id}`),
     onSuccess: (result) => {
-      toast("Xoá địa chỉ thành công!");
+      toast.success("Xoá địa chỉ thành công!");
       queryClient.invalidateQueries({
         queryKey: ["ADDRESS"],
       });
@@ -47,7 +47,7 @@ const useAddressMutation = () => {
         ward,
       }),
     onSuccess: (result) => {
-      toast("Thêm địa chỉ thành công!");
+      toast.success("Thêm địa chỉ thành công!");
       queryClient.invalidateQueries({
         queryKey: ["ADDRESS"],
       });

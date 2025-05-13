@@ -13,6 +13,7 @@ export default function CreateProduct() {
   });
 
   const [fileUrl, setFileUrl] = useState<string | null>(null);
+  const [galleryUrls, setGalleryUrls] = useState<string[]>([]);
 
   const { createProduct } = useProductMutation();
   const handleFileUrlChange = (url: string) => {
@@ -23,6 +24,7 @@ export default function CreateProduct() {
       ...data,
       hasVariants: true,
       image: fileUrl || "",
+      gallery: galleryUrls,
     });
   };
 
@@ -32,7 +34,10 @@ export default function CreateProduct() {
       <div className="bg-white p-6 rounded-lg">
         <FormProvider {...methods}>
           <form onSubmit={methods.handleSubmit(onSubmit)}>
-            <ProductForm onFileUrlChange={handleFileUrlChange} />
+            <ProductForm
+              onFileUrlChange={handleFileUrlChange}
+              onFileGalleryUrlChange={(urls) => setGalleryUrls(urls)}
+            />
             <ProductVariantForm />
             <div className="flex justify-end mt-5">
               <Button type="primary" htmlType="submit">

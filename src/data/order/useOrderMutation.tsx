@@ -8,7 +8,7 @@ const useOrderMutation = () => {
     mutationFn: async (order: CreateCheckout) =>
       await instance.post("/orders", order),
     onSuccess: (result) => {
-      toast("Đặt đơn hàng thành công!");
+      toast.success("Đặt đơn hàng thành công!");
       return result;
     },
     onError: (error: { response: { cart: { error_code: string } } }) => {
@@ -29,7 +29,7 @@ const useOrderMutation = () => {
         data: { variantIds },
       }),
     onSuccess: (result) => {
-      toast("Đã xoá sản phẩm khỏi giỏ hàng!");
+      toast.success("Đã xoá sản phẩm khỏi giỏ hàng!");
       queryClient.invalidateQueries({
         queryKey: ["CARTS"],
       });

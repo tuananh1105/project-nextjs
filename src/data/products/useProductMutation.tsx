@@ -12,7 +12,7 @@ const useProductMutation = () => {
       await instance.post("/products", product),
     onSuccess: (result) => {
       router.push("/admin/products");
-      toast("Thêm sản phẩm thành công!");
+      toast.success("Thêm sản phẩm thành công!");
       queryClient.invalidateQueries({
         queryKey: ["PRODUCTS"],
       });
@@ -27,7 +27,7 @@ const useProductMutation = () => {
   const deleteProduct = useMutation({
     mutationFn: async (id: string) => await instance.delete(`/products/${id}`),
     onSuccess: (result) => {
-      toast("Xoá sản phẩm thành công");
+      toast.success("Xoá sản phẩm thành công");
       queryClient.invalidateQueries({
         queryKey: ["PRODUCTS"],
       });

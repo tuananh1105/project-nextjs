@@ -1,6 +1,8 @@
 "use client";
+import { useFetchColor } from "@/data/colors/useFetchColor";
+import { useFetchSize } from "@/data/size/useFetchSize";
 import { Label } from "@medusajs/ui";
-import { Button, Input } from "antd";
+import { Button, Select } from "antd";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 
@@ -40,21 +42,69 @@ const generateVariants = (attributes: Attribute[]): Variant[] => {
 export default function ProductVariantForm() {
   const [attributes, setAttributes] = useState<Attribute[]>([]);
   const [variants, setVariants] = useState<Variant[]>([]);
-  const [newAttrName, setNewAttrName] = useState("");
-  const [newAttrValues, setNewAttrValues] = useState("");
+  const [newAttrName, setNewAttrName] = useState("color");
+  const [newAttrValues, setNewAttrValues] = useState<string[]>([]);
+  const [pagination] = useState({
+    current: 1,
+    pageSize: 10,
+  });
+
+  const [bulkInput, setBulkInput] = useState({
+    price: "",
+    countInStock: "",
+    sku: "",
+    weight: "",
+  });
+
+  const applyBulkValues = () => {
+    const updated = variants.map((v) => ({
+      ...v,
+      price: bulkInput.price ? +bulkInput.price : v.price,
+      countInStock: bulkInput.countInStock
+        ? +bulkInput.countInStock
+        : v.countInStock,
+      sku: bulkInput.sku || v.sku,
+      weight: bulkInput.weight ? +bulkInput.weight : v.weight,
+    }));
+    setVariants(updated);
+  };
+
+  const { data: colorList } = useFetchColor({
+    page: pagination.current,
+    limit: pagination.pageSize,
+  });
+
+  const { data: sizeList } = useFetchSize({
+    page: pagination.current,
+    limit: pagination.pageSize,
+  });
+
+  const options =
+    newAttrName === "color"
+      ? colorList?.data?.map((item) => ({
+          label: item.name,
+          value: item.colorCode,
+        }))
+      : sizeList?.data?.map((item) => ({
+          label: item.name,
+          value: item.name,
+        }));
 
   const { register } = useFormContext<ProductCreate>();
 
   const addAttribute = () => {
-    if (!newAttrName || !newAttrValues) return;
-    const values = newAttrValues
-      .split(",")
-      .map((v) => v.trim())
-      .filter(Boolean);
-    if (!values.length) return;
-    setAttributes([...attributes, { name: newAttrName, values }]);
+    const name = newAttrName.trim();
+
+    if (!name || newAttrValues.length === 0) return;
+
+    const values = newAttrValues.map((v) => v.trim()).filter((v) => v);
+
+    if (values.length === 0) return;
+
+    setAttributes((prev) => [...prev, { name, values }]);
+
     setNewAttrName("");
-    setNewAttrValues("");
+    setNewAttrValues([]);
   };
 
   const generate = () => {
@@ -72,23 +122,30 @@ export default function ProductVariantForm() {
             <Label className="block font-medium mb-1">
               <span className="text-red-500">*</span>Tên thuộc tính
             </Label>
-            <Input
+            <Select
+              size="large"
+              defaultValue="color"
+              style={{ width: "100%" }}
               value={newAttrName}
-              onChange={(e) => setNewAttrName(e.target.value)}
-              className="border p-2 w-full rounded mb-2"
-              placeholder="Ví dụ: Màu, Size"
+              options={[
+                { value: "color", label: "Color" },
+                { value: "size", label: "Size" },
+              ]}
+              onChange={(value) => setNewAttrName(value)}
             />
           </div>
           <div className="max-w-full w-full">
             <Label className="block font-medium mb-1">
-              <span className="text-red-500">*</span>Giá trị (phân cách bởi dấu
-              phẩy)
+              <span className="text-red-500">*</span>Giá trị
             </Label>
-            <Input
-              value={newAttrValues}
-              onChange={(e) => setNewAttrValues(e.target.value)}
-              className="border p-2 w-full rounded mb-2"
-              placeholder="Ví dụ: Đỏ, Xanh, Vàng"
+            <Select
+              mode="tags"
+              size="large"
+              placeholder="Vui lòng chọn"
+              defaultValue={[]}
+              style={{ width: "100%" }}
+              options={options}
+              onChange={(value) => setNewAttrValues(value)}
             />
           </div>
         </div>
@@ -115,87 +172,141 @@ export default function ProductVariantForm() {
       )}
 
       {variants.length > 0 && (
-        <table className="w-full mt-6 border border-gray-400">
-          <thead>
-            <tr>
-              {Object.keys(variants[0].attributes).map((attr, i) => (
-                <th key={i} className="border border-gray-400 p-2">
-                  {attr}
-                </th>
-              ))}
-              <th className="border border-gray-400 p-2">Price</th>
-              <th className="border border-gray-400 p-2">Stock</th>
-              <th className="border border-gray-400 p-2">SKU</th>
-              <th className="border border-gray-400 p-2">Weight</th>
-            </tr>
-          </thead>
-          <tbody>
-            {variants.map((variant, idx) => (
-              <tr key={idx}>
-                {Object.entries(variant.attributes).map(([key, val], i) => (
-                  <td key={i} className="border border-gray-400 p-2">
-                    <input
-                      type="hidden"
-                      {...register(`variants.${idx}.${key}`)}
-                      value={val}
-                    />
-                    {val}
-                  </td>
+        <div>
+          <table className="w-full mt-6 border border-gray-400">
+            <thead>
+              <tr>
+                {Object.keys(variants[0].attributes).map((attr, i) => (
+                  <th key={i} className="border border-gray-400 p-2">
+                    {attr}
+                  </th>
+                ))}
+                <th className="border border-gray-400 p-2">Price</th>
+                <th className="border border-gray-400 p-2">Stock</th>
+                <th className="border border-gray-400 p-2">SKU</th>
+                <th className="border border-gray-400 p-2">Weight</th>
+              </tr>
+
+              <tr>
+                {Object.keys(variants[0].attributes).map((_, i) => (
+                  <td key={i} className="border border-gray-400 p-2"></td>
                 ))}
                 <td className="border border-gray-400 p-2">
                   <input
-                    {...register(`variants.${idx}.price`)}
                     type="number"
-                    value={variant.price}
-                    onChange={(e) => {
-                      const v = [...variants];
-                      v[idx].price = +e.target.value;
-                      setVariants(v);
-                    }}
-                    className="w-full p-1 border border-gray-400 rounded"
+                    value={bulkInput.price}
+                    onChange={(e) =>
+                      setBulkInput({ ...bulkInput, price: e.target.value })
+                    }
+                    className="w-full p-1 border border-gray-300 rounded"
                   />
                 </td>
                 <td className="border border-gray-400 p-2">
                   <input
-                    {...register(`variants.${idx}.countInStock`)}
                     type="number"
-                    value={variant.countInStock}
-                    onChange={(e) => {
-                      const v = [...variants];
-                      v[idx].countInStock = +e.target.value;
-                      setVariants(v);
-                    }}
-                    className="w-full p-1 border border-gray-400 rounded"
+                    value={bulkInput.countInStock}
+                    onChange={(e) =>
+                      setBulkInput({
+                        ...bulkInput,
+                        countInStock: e.target.value,
+                      })
+                    }
+                    className="w-full p-1 border border-gray-300 rounded"
                   />
                 </td>
                 <td className="border border-gray-400 p-2">
                   <input
-                    {...register(`variants.${idx}.sku`)}
-                    value={variant.sku}
-                    onChange={(e) => {
-                      const v = [...variants];
-                      v[idx].sku = e.target.value;
-                      setVariants(v);
-                    }}
-                    className="w-full p-1 border border-gray-400 rounded"
+                    value={bulkInput.sku}
+                    onChange={(e) =>
+                      setBulkInput({ ...bulkInput, sku: e.target.value })
+                    }
+                    className="w-full p-1 border border-gray-300 rounded"
                   />
                 </td>
                 <td className="border border-gray-400 p-2">
                   <input
-                    {...register(`variants.${idx}.weight`)}
-                    value={variant.weight}
-                    onChange={(e) => {
-                      const v = [...variants];
-                      v[idx].weight = +e.target.value;
-                      setVariants(v);
-                    }}
-                    className="w-full p-1 border border-gray-400 rounded"
+                    value={bulkInput.weight}
+                    onChange={(e) =>
+                      setBulkInput({ ...bulkInput, weight: e.target.value })
+                    }
+                    className="w-full p-1 border border-gray-300 rounded"
                   />
                 </td>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+
+            <tbody>
+              {variants.map((variant, idx) => (
+                <tr key={idx}>
+                  {Object.entries(variant.attributes).map(([key, val], i) => (
+                    <td key={i} className="border border-gray-400 p-2">
+                      <input
+                        type="hidden"
+                        {...register(`variants.${idx}.${key}`)}
+                        value={val}
+                      />
+                      {val}
+                    </td>
+                  ))}
+                  <td className="border border-gray-400 p-2">
+                    <input
+                      {...register(`variants.${idx}.price`)}
+                      type="number"
+                      value={variant.price}
+                      onChange={(e) => {
+                        const v = [...variants];
+                        v[idx].price = +e.target.value;
+                        setVariants(v);
+                      }}
+                      className="w-full p-1 border border-gray-400 rounded"
+                    />
+                  </td>
+                  <td className="border border-gray-400 p-2">
+                    <input
+                      {...register(`variants.${idx}.countInStock`)}
+                      type="number"
+                      value={variant.countInStock}
+                      onChange={(e) => {
+                        const v = [...variants];
+                        v[idx].countInStock = +e.target.value;
+                        setVariants(v);
+                      }}
+                      className="w-full p-1 border border-gray-400 rounded"
+                    />
+                  </td>
+                  <td className="border border-gray-400 p-2">
+                    <input
+                      {...register(`variants.${idx}.sku`)}
+                      value={variant.sku}
+                      onChange={(e) => {
+                        const v = [...variants];
+                        v[idx].sku = e.target.value;
+                        setVariants(v);
+                      }}
+                      className="w-full p-1 border border-gray-400 rounded"
+                    />
+                  </td>
+                  <td className="border border-gray-400 p-2">
+                    <input
+                      {...register(`variants.${idx}.weight`)}
+                      value={variant.weight}
+                      onChange={(e) => {
+                        const v = [...variants];
+                        v[idx].weight = +e.target.value;
+                        setVariants(v);
+                      }}
+                      className="w-full p-1 border border-gray-400 rounded"
+                    />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+
+          <Button className="mt-3" onClick={applyBulkValues}>
+            Áp dụng cho tất cả
+          </Button>
+        </div>
       )}
     </div>
   );

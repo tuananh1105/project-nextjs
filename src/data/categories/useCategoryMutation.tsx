@@ -12,7 +12,7 @@ const useCategoryMutation = () => {
     },
     onSuccess: async (result) => {
       router.push("/admin/categories");
-      toast("Thêm danh mục thành công!");
+      toast.success("Thêm danh mục thành công!");
       queryClient.invalidateQueries({
         queryKey: ["CATEGORIES"],
       });
@@ -36,7 +36,7 @@ const useCategoryMutation = () => {
     },
     onSuccess: async (result) => {
       router.push("/admin/categories");
-      toast("Cập nhật danh mục thành công!");
+      toast.success("Cập nhật danh mục thành công!");
       queryClient.invalidateQueries({
         queryKey: ["CATEGORIES"],
       });
@@ -56,7 +56,7 @@ const useCategoryMutation = () => {
       return await instance.delete(`/categorys/${_id}`);
     },
     onSuccess: async (result) => {
-      toast("Xoá danh mục thành công!");
+      toast.success("Xoá danh mục thành công!");
       queryClient.invalidateQueries({
         queryKey: ["CATEGORIES"],
       });

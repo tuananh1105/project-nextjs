@@ -33,7 +33,7 @@ export default function CreateBlog() {
 
     if (Array.isArray(urls) && urls.every((url) => typeof url === "string")) {
       setUploadedGallery((prev) => [...prev, ...urls]);
-      toast("Upload ảnh thành công!", { autoClose: 3000 });
+      toast.success("Upload ảnh thành công!", { autoClose: 3000 });
     } else {
       toast.error("Dữ liệu trả về không hợp lệ", { autoClose: 3000 });
     }
@@ -43,7 +43,7 @@ export default function CreateBlog() {
     const url = res as string;
     if (typeof url === "string" && url.startsWith("http")) {
       setUploadedFiles(url);
-      toast("Upload thành công!", { autoClose: 3000 });
+      toast.success("Upload thành công!", { autoClose: 3000 });
       console.log("URL đã được lưu:", url);
     } else {
       toast.error("URL không hợp lệ", { autoClose: 3000 });
@@ -57,13 +57,9 @@ export default function CreateBlog() {
 
   const onSubmit = async (data: CreateBlog) => {
     await createBlog.mutateAsync({
-      title: data.title,
-      author: data.author,
-      content: data.content,
-      tags: data.tags,
+      ...data,
       gallery: uploadedGallery,
       thumbnail: uploadedFiles,
-      description: data.description,
     });
   };
   return (

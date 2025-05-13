@@ -12,8 +12,14 @@ import { toast } from "react-toastify";
 
 type ProductFormProps = {
   onFileUrlChange: (url: string) => void;
+  onFileGalleryUrlChange: (urls: string[]) => void;
 };
-export default function ProductForm({ onFileUrlChange }: ProductFormProps) {
+export default function ProductForm({
+  onFileUrlChange,
+  onFileGalleryUrlChange,
+}: ProductFormProps) {
+  const [galleryUrls, setGalleryUrls] = useState<string[]>([]);
+
   const { control } = useFormContext<ProductCreate>();
 
   const [pagination] = useState({
@@ -37,6 +43,19 @@ export default function ProductForm({ onFileUrlChange }: ProductFormProps) {
     }
   };
 
+  const handleGallerySuccess = (res: unknown) => {
+    const urls = res as string[];
+
+    if (Array.isArray(urls) && urls.every((url) => typeof url === "string")) {
+      const newUrls = [...galleryUrls, ...urls];
+      setGalleryUrls(newUrls);
+      onFileGalleryUrlChange(newUrls);
+      toast.success("Upload ảnh thành công!", { autoClose: 3000 });
+    } else {
+      toast.error("Dữ liệu trả về không hợp lệ", { autoClose: 3000 });
+    }
+  };
+
   const handleError = (error: Error, file: UploadFile) => {
     console.log("Upload thất bại:", error, file);
     toast.error("Upload thất bại", { autoClose: 3000 });
@@ -53,7 +72,7 @@ export default function ProductForm({ onFileUrlChange }: ProductFormProps) {
             name="name"
             control={control}
             render={({ field }) => (
-              <Input {...field} placeholder="nhập tên sản phẩm" />
+              <Input {...field} placeholder="nhập tên sản phẩm" size="large" />
             )}
           />
         </div>
@@ -66,6 +85,7 @@ export default function ProductForm({ onFileUrlChange }: ProductFormProps) {
             control={control}
             render={({ field }) => (
               <Select
+                size="large"
                 {...field}
                 showSearch
                 placeholder="Chọn danh mục"
@@ -93,7 +113,7 @@ export default function ProductForm({ onFileUrlChange }: ProductFormProps) {
             name="price"
             control={control}
             render={({ field }) => (
-              <Input {...field} placeholder="nhập giá sản phẩm" />
+              <Input {...field} placeholder="nhập giá sản phẩm" size="large" />
             )}
           />
         </div>
@@ -105,7 +125,11 @@ export default function ProductForm({ onFileUrlChange }: ProductFormProps) {
             name="originalPrice"
             control={control}
             render={({ field }) => (
-              <Input {...field} placeholder="nhập giá cũ sản phẩm" />
+              <Input
+                {...field}
+                placeholder="nhập giá cũ sản phẩm"
+                size="large"
+              />
             )}
           />
         </div>
@@ -116,29 +140,33 @@ export default function ProductForm({ onFileUrlChange }: ProductFormProps) {
           <Label>
             <span className="text-red-500">*</span>Image
           </Label>
-          <FileUploader
-            action="/upload-thumbnail-product"
-            fieldName="image"
-            multiple
-            onSuccess={handleSuccess}
-            onError={handleError}
-          />
+          <div>
+            <FileUploader
+              action="/upload-thumbnail-product"
+              fieldName="image"
+              multiple
+              onSuccess={handleSuccess}
+              onError={handleError}
+            />
+          </div>
         </div>
         <div className="max-w-full w-full">
           <Label>
             <span className="text-red-500">*</span>Gallery
           </Label>
-          <FileUploader
-            action="/upload-gallery-product"
-            fieldName="photos"
-            multiple
-            onSuccess={handleSuccess}
-            onError={handleError}
-          />
+          <div>
+            <FileUploader
+              action="/upload-gallery-product"
+              fieldName="photos"
+              multiple
+              onSuccess={handleGallerySuccess}
+              onError={handleError}
+            />
+          </div>
         </div>
       </div>
 
-      <div className="mt-10">
+      <div className="mt-5">
         <Label>
           <span className="text-red-500">*</span>Description
         </Label>

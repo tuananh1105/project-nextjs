@@ -9,7 +9,7 @@ const useCartMutation = () => {
       return await instance.post("/cart/add-to-cart", cart);
     },
     onSuccess: async (result) => {
-      toast("Đã thêm vào giỏ hàng thành công!");
+      toast.success("Đã thêm vào giỏ hàng thành công!");
       await queryClient.invalidateQueries({
         queryKey: ["CARTS"],
       });
@@ -30,7 +30,7 @@ const useCartMutation = () => {
       variantIds: string[];
     }) => instance.delete(`/cart/${userId}/product`, { data: { variantIds } }),
     onSuccess: (result) => {
-      toast("Đã xoá sản phẩm khỏi giỏ hàng!");
+      toast.success("Đã xoá sản phẩm khỏi giỏ hàng!");
       queryClient.invalidateQueries({
         queryKey: ["CARTS"],
       });
@@ -58,7 +58,7 @@ const useCartMutation = () => {
         productId,
       }),
     onSuccess: (result) => {
-      toast("Đã tăng số lượng sản phẩm!");
+      toast.success("Đã tăng số lượng sản phẩm!");
       queryClient.invalidateQueries({
         queryKey: ["CARTS"],
       });
@@ -86,7 +86,7 @@ const useCartMutation = () => {
         productId,
       }),
     onSuccess: (result) => {
-      toast("Đã giảm số lượng sản phẩm!");
+      toast.success("Đã giảm số lượng sản phẩm!");
       queryClient.invalidateQueries({
         queryKey: ["CARTS"],
       });

@@ -1,5 +1,6 @@
 import {
   FileOutlined,
+  HighlightOutlined,
   PieChartOutlined,
   ProductOutlined,
   ShopOutlined,
@@ -34,6 +35,10 @@ const items: MenuItem[] = [
   getItem("Categories", "sub2", <UnorderedListOutlined />, [
     getItem("Category List", "/admin/categories"),
     getItem("Create Category", "/admin/categories/create"),
+  ]),
+  getItem("Variants", "sub5", <HighlightOutlined />, [
+    getItem("Colors", "/admin/colors"),
+    getItem("Sizes", "/admin/sizes"),
   ]),
   getItem("Product", "sub1", <ProductOutlined />, [
     getItem("Product List", "/admin/products"),
