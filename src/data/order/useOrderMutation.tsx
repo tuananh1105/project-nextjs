@@ -41,7 +41,23 @@ const useOrderMutation = () => {
     },
   });
 
-  return { createOrder, deleteFormCart };
+  const updateOrder = useMutation({
+    mutationFn: ({ orderId, status }: { orderId: string; status: string }) =>
+      instance.put(`/orders/${orderId}`, { status }),
+    onSuccess: (result) => {
+      toast.success("Cập nhật trạng thái thành công!");
+      queryClient.invalidateQueries({
+        queryKey: ["ORDERS"],
+      });
+      return result;
+    },
+    onError: (error: { response: { cart: { error_code: string } } }) => {
+      console.log("error:", error);
+      toast.error("Cập nhật trạng thái chưa thành công!");
+    },
+  });
+
+  return { createOrder, deleteFormCart, updateOrder };
 };
 
 export default useOrderMutation;

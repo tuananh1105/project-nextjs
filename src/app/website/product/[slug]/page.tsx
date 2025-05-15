@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { Minus, Plus, ShoppingBag } from "@medusajs/icons";
-import useLogicCart from "@/hooks/useLogicCart";
+import useLogicCart from "@/hooks/cart/useLogicCart";
 import { Button } from "@/components/ui/custom-button";
 
 export default function ProductDetail() {

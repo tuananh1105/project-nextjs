@@ -2,8 +2,11 @@ import CurrencyVND, { formatDateTime } from "@/utils/helper";
 import { EyeOutlined } from "@ant-design/icons";
 import { TableColumnsType } from "antd";
 import Link from "next/link";
+import OrderStatusSelector from "./order-status-selector";
 
-export const OrderColumns = (): TableColumnsType<OrderList> => [
+export const OrderColumns = (
+  updateOrderStatus: (params: { id: string; status: OrderStatus }) => void
+): TableColumnsType<OrderList> => [
   {
     title: "",
     key: "view",
@@ -48,6 +51,7 @@ export const OrderColumns = (): TableColumnsType<OrderList> => [
     title: "Items",
     dataIndex: "items",
     render: (items) => <div>{items.length}</div>,
+    width: 80,
   },
   {
     title: "TotalPrice",
@@ -57,10 +61,29 @@ export const OrderColumns = (): TableColumnsType<OrderList> => [
         <CurrencyVND amount={totalPrice} />
       </div>
     ),
+    width: 100,
   },
   {
     title: "CreatedAt",
     dataIndex: "createdAt",
     render: (createdAt) => <span>{formatDateTime(createdAt)}</span>,
+  },
+  {
+    title: "Update Status",
+    dataIndex: "status",
+    render: (status, record) => {
+      const handleChange = (newStatus: OrderStatus) => {
+        updateOrderStatus({ id: record._id, status: newStatus });
+      };
+      return (
+        <div>
+          <OrderStatusSelector
+            defaultValue={status}
+            value={status}
+            onChange={handleChange}
+          />
+        </div>
+      );
+    },
   },
 ];

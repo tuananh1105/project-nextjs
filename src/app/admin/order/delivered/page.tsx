@@ -1,61 +1,21 @@
 "use client";
 
 import { OrderColumns } from "@/components/order/columns-order";
-import { useFetchOrderByStatus } from "@/data/order/useFetchOrderByStatus";
+import useOrderLogic from "@/hooks/order/useOrderLogic";
+import useUpdateOrderStatus from "@/hooks/order/useUpdateOrderStatus";
 import { useStyle } from "@/utils/helper";
-import { Table, TablePaginationConfig } from "antd";
-import { useMemo, useState } from "react";
+import { Table } from "antd";
 
 export default function OrderDelivered() {
-  const { styles } = useStyle();
-  const [pagination, setPagination] = useState({
-    current: 1,
-    pageSize: 10,
-  });
   const status = "delivered";
 
-  const { data: orders, isLoading } = useFetchOrderByStatus({
-    status,
-    params: { page: pagination.current, limit: pagination.pageSize },
-  });
+  const { styles } = useStyle();
+  const { orderList, isLoading, pagination, onPaginationChange, orders } =
+    useOrderLogic(status);
 
-  const columns = OrderColumns();
+  const { updateOrderStatus } = useUpdateOrderStatus();
 
-  const orderList = useMemo(() => {
-    if (Array.isArray(orders)) {
-      return orders.map((item) => ({
-        _id: item._id,
-        key: item._id,
-        orderNumber: item.orderNumber,
-        name: item.name,
-        paymentMethod: item.paymentMethod,
-        items: item.items,
-        totalPrice: item.totalPrice,
-        createdAt: item.createdAt,
-      }));
-    }
-    if (orders?.data && Array.isArray(orders.data)) {
-      return orders.data.map((item: OrderList) => ({
-        _id: item._id,
-        key: item._id,
-        orderNumber: item.orderNumber,
-        name: item.name,
-        paymentMethod: item.paymentMethod,
-        items: item.items,
-        totalPrice: item.totalPrice,
-        createdAt: item.createdAt,
-      }));
-    }
-    return [];
-  }, [orders]);
-
-  const handleTableChange = (paginationInfo: TablePaginationConfig) => {
-    setPagination({
-      current: paginationInfo.current || 1,
-      pageSize: paginationInfo.pageSize || 10,
-    });
-  };
-
+  const columns = OrderColumns(updateOrderStatus);
   return (
     <div>
       <div>
@@ -76,7 +36,7 @@ export default function OrderDelivered() {
           scroll={{ y: 55 * 5 }}
           loading={isLoading}
           rowKey="_id"
-          onChange={handleTableChange}
+          onChange={onPaginationChange}
         />
       </div>
     </div>

@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/custom-button";
 import { ArrowRightMini } from "@medusajs/icons";
 import { useFetchCartByProductId } from "@/data/cart/useFetchCartByProductId";
-import useLogicCart from "@/hooks/useLogicCart";
+import useLogicCart from "@/hooks/cart/useLogicCart";
 import { useFetchProductById } from "@/data/products/useProductById";
 
 const ModalUpdateCart = ({

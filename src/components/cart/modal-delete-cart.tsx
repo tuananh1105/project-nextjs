@@ -1,6 +1,6 @@
 import { FocusModal } from "@/components/ui/custom-focus-modal";
 import { AnimatePresence, motion } from "framer-motion";
-import { Trash } from "../ui/icon";
+import { Trash } from "@/components/ui/icon";
 
 const ModalDeleteCart = ({
   isOpen,

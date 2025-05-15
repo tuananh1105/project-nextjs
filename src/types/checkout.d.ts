@@ -38,6 +38,7 @@ type OrderParams = {
 }
 
 type OrderList ={
+    data: boolean;
     _id: string;
     orderNumber: string;
     name: string;
@@ -45,4 +46,13 @@ type OrderList ={
     items: string;
     totalPrice: number;
     createdAt: string;
+    status: string;
 }
+
+ type OrderStatus =
+  | 'pendingPayment'
+  | 'pending'
+  | 'shipped'
+  | 'received'
+  | 'delivered'
+  | 'canceled';

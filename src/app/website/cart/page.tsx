@@ -6,7 +6,7 @@ import CartProduct from "@/components/cart/product-cart";
 import { Button } from "@/components/ui/custom-button";
 import { useFetchCart } from "@/data/cart/useFetchCart";
 import useCartMutation from "@/data/cart/useMutationCart";
-import useLogicCart from "@/hooks/useLogicCart";
+import useLogicCart from "@/hooks/cart/useLogicCart";
 import CurrencyVND from "@/utils/helper";
 import { ArrowRightMini } from "@medusajs/icons";
 import { Label } from "@medusajs/ui";

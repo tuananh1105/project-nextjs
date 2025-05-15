@@ -50,10 +50,10 @@ export default function ProductVariantForm() {
   });
 
   const [bulkInput, setBulkInput] = useState({
-    price: "",
-    countInStock: "",
+    price: 0,
+    countInStock: 0,
     sku: "",
-    weight: "",
+    weight: 0,
   });
 
   const applyBulkValues = () => {
@@ -196,7 +196,10 @@ export default function ProductVariantForm() {
                     type="number"
                     value={bulkInput.price}
                     onChange={(e) =>
-                      setBulkInput({ ...bulkInput, price: e.target.value })
+                      setBulkInput({
+                        ...bulkInput,
+                        price: parseFloat(e.target.value),
+                      })
                     }
                     className="w-full p-1 border border-gray-300 rounded"
                   />
@@ -208,7 +211,7 @@ export default function ProductVariantForm() {
                     onChange={(e) =>
                       setBulkInput({
                         ...bulkInput,
-                        countInStock: e.target.value,
+                        countInStock: parseFloat(e.target.value),
                       })
                     }
                     className="w-full p-1 border border-gray-300 rounded"
@@ -227,7 +230,10 @@ export default function ProductVariantForm() {
                   <input
                     value={bulkInput.weight}
                     onChange={(e) =>
-                      setBulkInput({ ...bulkInput, weight: e.target.value })
+                      setBulkInput({
+                        ...bulkInput,
+                        weight: parseFloat(e.target.value),
+                      })
                     }
                     className="w-full p-1 border border-gray-300 rounded"
                   />

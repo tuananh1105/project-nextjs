@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import useLogicCart from "@/hooks/useLogicCart";
+import useLogicCart from "@/hooks/cart/useLogicCart";
 import { useFetchCart } from "@/data/cart/useFetchCart";
 import { Cart } from "./ui/icon";
 
