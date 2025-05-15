@@ -2,7 +2,7 @@
 import { useFetchColor } from "@/data/colors/useFetchColor";
 import { useFetchSize } from "@/data/size/useFetchSize";
 import { Label } from "@medusajs/ui";
-import { Button, Select } from "antd";
+import { Button, Select, SelectProps, Tag } from "antd";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 
@@ -18,6 +18,7 @@ type Variant = {
   sku: string;
   weight: number;
 };
+type TagRender = SelectProps["tagRender"];
 
 const cartesianProduct = (arrays: string[][]): string[][] =>
   arrays.reduce((a, b) => a.flatMap((x) => b.map((y) => [...x, y])), [
@@ -112,6 +113,25 @@ export default function ProductVariantForm() {
     setVariants(result);
   };
 
+  const tagRender: TagRender = (props) => {
+    const { label, value, closable, onClose } = props;
+    const onPreventMouseDown = (event: React.MouseEvent<HTMLSpanElement>) => {
+      event.preventDefault();
+      event.stopPropagation();
+    };
+    return (
+      <Tag
+        color={value}
+        onMouseDown={onPreventMouseDown}
+        closable={closable}
+        onClose={onClose}
+        style={{ marginInlineEnd: 4, height: "100%" }}
+      >
+        {label}
+      </Tag>
+    );
+  };
+
   return (
     <div>
       <h3 className="text-lg font-semibold mb-4 mt-4">Tạo biến thể sản phẩm</h3>
@@ -139,7 +159,8 @@ export default function ProductVariantForm() {
               <span className="text-red-500">*</span>Giá trị
             </Label>
             <Select
-              mode="tags"
+              tagRender={newAttrName === "color" ? tagRender : undefined}
+              mode={newAttrName === "color" ? "multiple" : "tags"}
               size="large"
               placeholder="Vui lòng chọn"
               defaultValue={[]}
