@@ -23,3 +23,23 @@ export const useFetchSize = (params: SizeParams) => {
     staleTime: 6 * 1000 * 60,
   });
 };
+
+export const fetchSizeById = async (id: string) => {
+  try {
+    const res = await instance.get<Size>(`/size/${id}`);
+    if (res.status !== 200) {
+      throw new Error("Không có dữ liệu!");
+    }
+    return res.data;
+  } catch (error) {
+    console.log("error:", error);
+  }
+};
+
+export const useFetchSizeById = (id: string) => {
+  return useQuery({
+    queryKey: ["SIZE", id],
+    queryFn: () => fetchSizeById(id),
+    staleTime: 6 * 1000 * 60,
+  });
+};

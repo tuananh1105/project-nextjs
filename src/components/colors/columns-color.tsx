@@ -26,7 +26,7 @@ export const ColorColumns = ({
         },
         {
           key: "3",
-          label: <Link href={`/admin/categories/${_id}`}>Edit</Link>,
+          label: <Link href={`/admin/colors/edit/${_id}`}>Edit</Link>,
           icon: <EditOutlined />,
         },
       ];

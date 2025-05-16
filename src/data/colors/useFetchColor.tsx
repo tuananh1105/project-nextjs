@@ -23,3 +23,23 @@ export const useFetchColor = (params: ColorParams) => {
     staleTime: 6 * 1000 * 60,
   });
 };
+
+export const fetchColorById = async (id: string) => {
+  try {
+    const res = await instance.get<Color>(`/color/${id}`);
+    if (res.status !== 200) {
+      throw new Error("Không có dữ liệu!");
+    }
+    return res.data;
+  } catch (error) {
+    console.log("error:", error);
+  }
+};
+
+export const useFetchColorById = (id: string) => {
+  return useQuery({
+    queryKey: ["COLOR", id],
+    queryFn: () => fetchColorById(id),
+    staleTime: 6 * 1000 * 60,
+  });
+};

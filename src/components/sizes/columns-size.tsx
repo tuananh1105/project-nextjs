@@ -26,7 +26,7 @@ export const SizeColumns = ({
         },
         {
           key: "3",
-          label: <Link href={`/admin/categories/${_id}`}>Edit</Link>,
+          label: <Link href={`/admin/sizes/edit/${_id}`}>Edit</Link>,
           icon: <EditOutlined />,
         },
       ];

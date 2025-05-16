@@ -37,7 +37,27 @@ const useColorMutation = () => {
     },
   });
 
-  return { createColor, deleteColor };
+  const editColor = useMutation({
+    mutationFn: async ({ _id, color }: { _id: string; color: Color }) =>
+      instance.put(`/colors/${_id}`, color),
+    onSuccess: (result) => {
+      router.push("/admin/colors");
+      toast("Cập nhật màu sắc thành công!");
+      queryClient.invalidateQueries({
+        queryKey: ["COLORS"],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["COLOR"],
+      });
+      return result;
+    },
+    onError: (error: { response: { cart: { error_code: string } } }) => {
+      console.log("error:", error);
+      toast.error("Cập nhật màu sắc không thành công!");
+    },
+  });
+
+  return { createColor, deleteColor, editColor };
 };
 
 export default useColorMutation;

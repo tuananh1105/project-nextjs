@@ -37,7 +37,27 @@ const useSizeMutation = () => {
     },
   });
 
-  return { createSize, deleteSize };
+  const editSize = useMutation({
+    mutationFn: async ({ _id, size }: { _id: string; size: Size }) =>
+      instance.put(`/sizes/${_id}`, size),
+    onSuccess: (result) => {
+      router.push("/admin/sizes");
+      toast.success("Cập nhật size thành công!");
+      queryClient.invalidateQueries({
+        queryKey: ["SIZES"],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["SIZE"],
+      });
+      return result;
+    },
+    onError: (error: { response: { cart: { error_code: string } } }) => {
+      console.log("error:", error);
+      toast.error("Cập nhật size không thành công!");
+    },
+  });
+
+  return { createSize, deleteSize, editSize };
 };
 
 export default useSizeMutation;
