@@ -56,3 +56,15 @@ type OrderList ={
   | 'received'
   | 'delivered'
   | 'canceled';
+
+
+  type OrderUser ={
+    _id: string;
+    orderNumber: string;
+    name: string;
+    paymentMethod: string;
+    items: ProductCheckout[];
+    totalPrice: number;
+    createdAt: string;
+    status: string;
+}

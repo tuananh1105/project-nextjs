@@ -5,7 +5,8 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import useLogicCart from "@/hooks/cart/useLogicCart";
 import { useFetchCart } from "@/data/cart/useFetchCart";
-import { Cart } from "./ui/icon";
+import { Cart } from "@/components/ui/icon";
+import DropdownUser from "@/components/home/dropdown-user";
 
 export default function Header() {
   const [token, setToken] = useState(false);
@@ -42,9 +43,9 @@ export default function Header() {
                 <li>
                   <Link
                     className="text-gray-500 transition hover:text-gray-500/75 dark:text-white dark:hover:text-white/75"
-                    href={"/website/about"}
+                    href={"/website"}
                   >
-                    About
+                    Trang Chủ
                   </Link>
                 </li>
 
@@ -53,7 +54,7 @@ export default function Header() {
                     className="text-gray-500 transition hover:text-gray-500/75 dark:text-white dark:hover:text-white/75"
                     href="#"
                   >
-                    Careers
+                    Sản Phẩm
                   </a>
                 </li>
 
@@ -62,7 +63,7 @@ export default function Header() {
                     className="text-gray-500 transition hover:text-gray-500/75 dark:text-white dark:hover:text-white/75"
                     href="#"
                   >
-                    History
+                    Tin Tức
                   </a>
                 </li>
 
@@ -71,7 +72,7 @@ export default function Header() {
                     className="text-gray-500 transition hover:text-gray-500/75 dark:text-white dark:hover:text-white/75"
                     href="#"
                   >
-                    Services
+                    Liên Hệ
                   </a>
                 </li>
 
@@ -80,16 +81,7 @@ export default function Header() {
                     className="text-gray-500 transition hover:text-gray-500/75 dark:text-white dark:hover:text-white/75"
                     href="#"
                   >
-                    Projects
-                  </a>
-                </li>
-
-                <li>
-                  <a
-                    className="text-gray-500 transition hover:text-gray-500/75 dark:text-white dark:hover:text-white/75"
-                    href="#"
-                  >
-                    Blog
+                    Giới Thiệu
                   </a>
                 </li>
               </ul>
@@ -106,6 +98,9 @@ export default function Header() {
                       <span className="absolute top-[-5px] left-3 bg-red-500 text-white rounded-full w-3 h-3 flex items-center justify-center text-xs">
                         {cart?.products.length}
                       </span>
+                    </div>
+                    <div className="mt-1">
+                      <DropdownUser />
                     </div>
                     <div className="rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-black dark:bg-gray-800 dark:text-white dark:hover:text-white/75 cursor-pointer">
                       Đăng xuất

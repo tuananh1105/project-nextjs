@@ -70,3 +70,11 @@ export const formatDateTime = (isoDate: string): string => {
     minute: "2-digit",
   });
 };
+
+export const STATUS_VIETNAMESE_MAP: { [key: string]: string } = {
+  pending: "Chờ Xác Nhận",
+  shipped: "Đang Vận Chuyển",
+  received: "Đang Vận Chuyển",
+  delivered: "Đã Giao",
+  canceled: "Đã Hủy",
+};

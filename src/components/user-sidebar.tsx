@@ -1,6 +1,7 @@
 "use client";
 import { OrderedListOutlined } from "@ant-design/icons";
 import { BellAlert, MapPin, User } from "@medusajs/icons";
+import { Avatar } from "antd";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -10,7 +11,7 @@ const menuItems = [
   {
     label: "Đơn Mua",
     icon: <OrderedListOutlined />,
-    href: "/user/orders",
+    href: "/website/user/user-order",
     highlight: true,
   },
   { label: "Địa Chỉ", icon: <MapPin />, href: "/website/user/address" },
@@ -29,8 +30,8 @@ export default function UserSidebar() {
   return (
     <div className="w-full p-4 rounded-xl bg-white max-w-[250px]">
       <div className="flex items-center gap-3 mb-6">
-        <img
-          src="https://i.pravatar.cc/40"
+        <Avatar
+          src="https://res.cloudinary.com/dfjsl3isc/image/upload/v1736418158/products/anh.png"
           alt="avatar"
           className="w-10 h-10 rounded-full"
         />
