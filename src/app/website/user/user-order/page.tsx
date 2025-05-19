@@ -1,7 +1,8 @@
 "use client";
 
 import ModalCancelOrder from "@/components/order/modal-cancel-order";
-import { useFetchOrderByStatus } from "@/data/order/useFetchOrderByStatus";
+import { useFetchOrderByUserId } from "@/data/order/useFetchOrderByStatus";
+import { getUserId } from "@/lib/get-userId";
 import CurrencyVND, { STATUS_VIETNAMESE_MAP } from "@/utils/helper";
 import {
   Button,
@@ -44,7 +45,7 @@ export default function UserOrderPage() {
   const [status, setStatus] = useState("ALL");
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(PAGESIZE);
-
+  const userId = getUserId();
   const hanleCancelCloseModal = () => {
     setIsOpenModalCancel(false);
   };
@@ -52,7 +53,8 @@ export default function UserOrderPage() {
     setIsOpenModalCancel(true);
   };
 
-  const { data: orderList, isLoading } = useFetchOrderByStatus({
+  const { data: orderList, isLoading } = useFetchOrderByUserId({
+    userId: userId,
     status,
     params: {
       page,
@@ -119,6 +121,7 @@ export default function UserOrderPage() {
                       <div className="flex gap-3">
                         <Image
                           src={product.image}
+                          alt="Product image"
                           width={80}
                           height={80}
                           className="object-cover rounded-sm"

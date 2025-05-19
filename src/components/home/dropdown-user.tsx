@@ -2,10 +2,12 @@ import { SettingOutlined } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Avatar, Dropdown, Space } from "antd";
 import React from "react";
-import { useRouter } from "next/navigation"; // app router
+import { useRouter } from "next/navigation"; // App Router
+import { getRole } from "@/lib/get-userId";
 
 const DropdownUser: React.FC = () => {
   const router = useRouter();
+  const role = getRole();
 
   const items: MenuProps["items"] = [
     {
@@ -24,11 +26,15 @@ const DropdownUser: React.FC = () => {
       key: "3",
       label: "Purchase Order",
     },
-    {
-      key: "4",
-      label: "Settings",
-      icon: <SettingOutlined />,
-    },
+    ...(role === "admin"
+      ? [
+          {
+            key: "4",
+            label: "DashBoard",
+            icon: <SettingOutlined />,
+          },
+        ]
+      : []),
   ];
 
   const onClick = ({ key }: { key: string }) => {
@@ -40,7 +46,9 @@ const DropdownUser: React.FC = () => {
         router.push("/website/user/user-order");
         break;
       case "4":
-        router.push("/users/settings");
+        if (role === "admin") {
+          router.push("/admin");
+        }
         break;
       default:
         break;
@@ -54,6 +62,7 @@ const DropdownUser: React.FC = () => {
           <Avatar
             className="cursor-pointer"
             src="https://res.cloudinary.com/dfjsl3isc/image/upload/v1736418158/products/anh.png"
+            alt="User avatar"
           />
         </Space>
       </a>

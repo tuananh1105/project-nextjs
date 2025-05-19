@@ -9,6 +9,9 @@ const useOrderMutation = () => {
       await instance.post("/orders", order),
     onSuccess: (result) => {
       toast.success("Đặt đơn hàng thành công!");
+      queryClient.invalidateQueries({
+        queryKey: ["ORDER"],
+      });
       return result;
     },
     onError: (error: { response: { cart: { error_code: string } } }) => {
@@ -63,7 +66,7 @@ const useOrderMutation = () => {
     onSuccess: (result) => {
       toast.success("Huỷ đơn hàng thành công!");
       queryClient.invalidateQueries({
-        queryKey: ["ORDERS"],
+        queryKey: ["ORDER"],
       });
       return result;
     },

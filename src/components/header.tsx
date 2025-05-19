@@ -16,7 +16,7 @@ export default function Header() {
   const { data: cart } = useFetchCart(userId);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("user");
     if (token) {
       setToken(true);
     }
