@@ -79,3 +79,30 @@ export const useFetchOrderByUserId = ({
     staleTime: 1000 * 60 * 5,
   });
 };
+
+export const fetchOrderCountByStatus = async (
+  status?: string
+): Promise<number[]> => {
+  try {
+    const res = await instance.get("/order-all", {
+      params: status ? { status } : {},
+    });
+
+    if (res.status !== 200 || !Array.isArray(res.data)) {
+      throw new Error("Không có dữ liệu!");
+    }
+
+    return res.data;
+  } catch (error) {
+    console.error("Lỗi fetchOrdersByStatus:", error);
+    return [];
+  }
+};
+
+export const useOrderCountByStatus = (status?: string) => {
+  return useQuery({
+    queryKey: ["ORDER_COUNT", status],
+    queryFn: () => fetchOrderCountByStatus(status),
+    enabled: true,
+  });
+};

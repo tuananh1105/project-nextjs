@@ -1,6 +1,6 @@
-import { Avatar, Layout, theme } from "antd";
 import BreadCrumb from "@/components/dashboard/header/bread-cumb";
-import { UserOutlined } from "@ant-design/icons";
+import { Layout, theme } from "antd";
+import DropdownAdmin from "@/components/dashboard/header/dropdown-admin";
 
 const { Header: AntdHeader } = Layout;
 
@@ -19,13 +19,7 @@ const CustomHeader = () => {
     >
       <div className="px-6 flex justify-between items-center h-full">
         <BreadCrumb />
-        <Avatar
-          size="large"
-          icon={<UserOutlined />}
-          src={
-            "https://res.cloudinary.com/dfjsl3isc/image/upload/v1736418158/products/anh.png"
-          }
-        />
+        <DropdownAdmin />
       </div>
     </AntdHeader>
   );
