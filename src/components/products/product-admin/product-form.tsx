@@ -138,7 +138,7 @@ export default function ProductForm({
       <div className="lg:flex-row lg:justify-between flex gap-3 flex-col lg:gap-5 mt-3">
         <div className="max-w-full w-full">
           <Label>
-            <span className="text-red-500">*</span>Image
+            <span className="text-red-500">*</span>Images
           </Label>
           <div>
             <FileUploader
