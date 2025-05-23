@@ -51,7 +51,7 @@ export default function Register() {
 
   const onSubmit = async (data: RegisterSchemaType) => {
     await signup.mutateAsync(data);
-    router.push("/login");
+    router.push("/website/login");
   };
   return (
     <>
