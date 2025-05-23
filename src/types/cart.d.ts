@@ -1,4 +1,6 @@
 type ProductCart = {
+    price: number;
+    description: ReactNode;
     productId: string;
     variantId: string;
     quantity: number | string;

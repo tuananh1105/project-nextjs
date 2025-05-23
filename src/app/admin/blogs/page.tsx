@@ -1,5 +1,6 @@
 "use client";
 
+import CardBlog from "@/components/blog/cart-blog";
 import { BlogColumns } from "@/components/blog/columns-blog";
 import { useFetchBlog } from "@/data/blog/useBlogList";
 import useBlogMutation from "@/data/blog/useBlogMutation";
@@ -64,28 +65,41 @@ export default function BlogList() {
   return (
     <div>
       <div className="flex justify-between">
-        <p className="text-xl font-semibold">Danh sách tin tức</p>
+        <p className="text-[15px] lg:text-xl mt-1 font-semibold">
+          Danh sách tin tức
+        </p>
         <Link href={"/admin/blogs/create"}>
           <Button>Thêm tin tức</Button>
         </Link>
       </div>
-      <div className="bg-white p-3 rounded-lg mt-3">
-        <Table<Blog>
-          className={styles.customTable}
-          columns={columns}
-          dataSource={blog}
-          pagination={{
-            current: pagination.current,
-            pageSize: pagination.pageSize,
-            total: blogList?.meta?.totalItems ?? 0,
-            showSizeChanger: true,
-            pageSizeOptions: [2, 5, 10, 20],
-          }}
-          scroll={{ y: 55 * 5 }}
-          loading={isLoading}
-          rowKey="_id"
-          onChange={handleTableChange}
-        />
+      <div className="lg:bg-white lg:p-3 rounded-lg mt-3">
+        <div className="hidden lg:block">
+          <Table<Blog>
+            className={styles.customTable}
+            columns={columns}
+            dataSource={blog}
+            pagination={{
+              current: pagination.current,
+              pageSize: pagination.pageSize,
+              total: blogList?.meta?.totalItems ?? 0,
+              showSizeChanger: true,
+              pageSizeOptions: [2, 5, 10, 20],
+            }}
+            scroll={{ y: 55 * 5 }}
+            loading={isLoading}
+            rowKey="_id"
+            onChange={handleTableChange}
+          />
+        </div>
+        <div className="block lg:hidden mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4 justify-items-center">
+          {blog.map((item) => (
+            <CardBlog
+              handleDeleteBlog={() => handleDelete(item._id)}
+              key={item._id}
+              blog={item}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

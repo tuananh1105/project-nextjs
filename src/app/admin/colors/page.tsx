@@ -1,5 +1,6 @@
 "use client";
 
+import CardColor from "@/components/colors/cart-color";
 import { ColorColumns } from "@/components/colors/columns-color";
 import useColorMutation from "@/data/colors/useColorMutation";
 import { useFetchColor } from "@/data/colors/useFetchColor";
@@ -60,28 +61,41 @@ export default function ColorList() {
   return (
     <div>
       <div className="flex justify-between">
-        <p className="text-xl font-semibold">Danh sách màu sắc</p>
+        <p className="text-[15px] lg:text-xl mt-1 font-semibold">
+          Danh sách màu sắc
+        </p>
         <Link href={"/admin/colors/create"}>
           <Button>Thêm màu sắc</Button>
         </Link>
       </div>
-      <div className="bg-white p-3 rounded-lg mt-3">
-        <Table<Color>
-          className={styles.customTable}
-          columns={columns}
-          dataSource={colors}
-          pagination={{
-            current: pagination.current,
-            pageSize: pagination.pageSize,
-            total: colorList?.meta?.totalItems ?? 0,
-            showSizeChanger: true,
-            pageSizeOptions: [2, 5, 10, 20],
-          }}
-          scroll={{ y: 55 * 5 }}
-          loading={isLoading}
-          rowKey="_id"
-          onChange={handleTableChange}
-        />
+      <div className="lg:bg-white lg:p-3 rounded-lg mt-3">
+        <div className="hidden lg:block">
+          <Table<Color>
+            className={styles.customTable}
+            columns={columns}
+            dataSource={colors}
+            pagination={{
+              current: pagination.current,
+              pageSize: pagination.pageSize,
+              total: colorList?.meta?.totalItems ?? 0,
+              showSizeChanger: true,
+              pageSizeOptions: [2, 5, 10, 20],
+            }}
+            scroll={{ y: 55 * 5 }}
+            loading={isLoading}
+            rowKey="_id"
+            onChange={handleTableChange}
+          />
+        </div>
+        <div className="block lg:hidden mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4 justify-items-center">
+          {colors.map((item) => (
+            <CardColor
+              handleDeleteColor={() => handleDelete(item._id)}
+              key={item._id}
+              color={item}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

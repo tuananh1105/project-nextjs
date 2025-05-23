@@ -1,5 +1,6 @@
 "use client";
 
+import CardSize from "@/components/sizes/cart-size";
 import { SizeColumns } from "@/components/sizes/columns-size";
 import { useFetchSize } from "@/data/size/useFetchSize";
 import useSizeMutation from "@/data/size/useSizeMutation";
@@ -66,28 +67,41 @@ export default function SizeList() {
   return (
     <div>
       <div className="flex justify-between">
-        <p className="text-xl font-semibold">Danh sách kích thước</p>
+        <p className="text-[15px] lg:text-xl mt-1 font-semibold">
+          Danh sách kích thước
+        </p>
         <Link href={"/admin/sizes/create"}>
           <Button>Thêm kích thước</Button>
         </Link>
       </div>
-      <div className="bg-white p-3 rounded-lg mt-3">
-        <Table<Size>
-          className={styles.customTable}
-          columns={columns}
-          dataSource={sizes}
-          pagination={{
-            current: pagination.current,
-            pageSize: pagination.pageSize,
-            total: sizeList?.meta?.totalItems ?? 0,
-            showSizeChanger: true,
-            pageSizeOptions: [2, 5, 10, 20],
-          }}
-          scroll={{ y: 55 * 5 }}
-          loading={isLoading}
-          rowKey="_id"
-          onChange={handleTableChange}
-        />
+      <div className="lg:bg-white lg:p-3 rounded-lg mt-3">
+        <div className="hidden lg:block">
+          <Table<Size>
+            className={styles.customTable}
+            columns={columns}
+            dataSource={sizes}
+            pagination={{
+              current: pagination.current,
+              pageSize: pagination.pageSize,
+              total: sizeList?.meta?.totalItems ?? 0,
+              showSizeChanger: true,
+              pageSizeOptions: [2, 5, 10, 20],
+            }}
+            scroll={{ y: 55 * 5 }}
+            loading={isLoading}
+            rowKey="_id"
+            onChange={handleTableChange}
+          />
+        </div>
+        <div className="block lg:hidden mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4 justify-items-center">
+          {sizes.map((item) => (
+            <CardSize
+              handleDeleteSize={() => handleDelete(item._id)}
+              key={item._id}
+              size={item}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

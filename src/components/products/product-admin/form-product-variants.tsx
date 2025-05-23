@@ -137,7 +137,7 @@ export default function ProductVariantForm() {
       <h3 className="text-lg font-semibold mb-4 mt-4">Tạo biến thể sản phẩm</h3>
 
       <div className="mb-4">
-        <div className="flex justify-between gap-3">
+        <div className="flex gap-3 flex-col lg:flex-row lg:gap-5 lg:justify-between">
           <div className="max-w-full w-full">
             <Label className="block font-medium mb-1">
               <span className="text-red-500">*</span>Tên thuộc tính

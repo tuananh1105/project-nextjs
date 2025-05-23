@@ -18,17 +18,17 @@ const ProductCart = () => {
   if (isLoading) return <div>...Loading</div>;
   if (error) return <div>Error</div>;
   return (
-    <div className="max-w-[1200px] m-auto grid grid-cols-4 gap-y-10">
+    <div className="max-w-[1200px] m-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-10 justify-items-center">
       {listProduct?.data.map((product: Product) => (
         <div className="flex" key={product._id}>
-          <div className="group block">
-            <div className="">
+          <div className="">
+            <div className="flex flex-col">
               <Image
                 src={product.image}
                 alt=""
                 width={300}
                 height={500}
-                className="object-cover border-[1px] border-gray-400 rounded-lg w-64 h-96 "
+                className="object-cover border-[1px] border-gray-400 rounded-lg lg:w-64 lg:h-96 w-44 h-66"
               />
             </div>
 

@@ -5,7 +5,7 @@ import ProductCart from "@/components/home/product-cart";
 
 export default function Home() {
   return (
-    <div>
+    <div className="bg-white">
       <Banner />
       <ProductCart />
     </div>

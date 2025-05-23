@@ -23,7 +23,7 @@ export default function CreateCategory() {
   return (
     <div className="">
       <h1 className="mb-4 text-xl">Thêm danh mục</h1>
-      <div className="bg-white p-10 rounded-lg max-w-[700px]">
+      <div className="bg-white p-5 rounded-lg max-w-[700px]">
         <Form
           className=""
           name="basic"
@@ -55,13 +55,11 @@ export default function CreateCategory() {
           </Form.Item>
 
           <Form.Item label={null}>
-            <Button
-              type="primary"
-              className="left-[500px] mt-5"
-              htmlType="submit"
-            >
-              Submit
-            </Button>
+            <div className="flex justify-end mt-5">
+              <Button type="primary" htmlType="submit">
+                Submit
+              </Button>
+            </div>
           </Form.Item>
         </Form>
       </div>

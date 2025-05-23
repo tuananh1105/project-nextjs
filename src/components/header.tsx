@@ -22,7 +22,7 @@ export default function Header() {
     }
   }, []);
   return (
-    <header className="bg-white dark:bg-gray-900">
+    <header className="bg-white">
       <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           <div className="flex-1 md:flex md:items-center md:gap-12">
@@ -42,7 +42,7 @@ export default function Header() {
               <ul className="flex items-center gap-6 text-sm">
                 <li>
                   <Link
-                    className="text-gray-500 transition hover:text-gray-500/75 dark:text-white dark:hover:text-white/75"
+                    className="text-gray-500 hover:text-black"
                     href={"/website"}
                   >
                     Trang Chủ
@@ -50,37 +50,25 @@ export default function Header() {
                 </li>
 
                 <li>
-                  <a
-                    className="text-gray-500 transition hover:text-gray-500/75 dark:text-white dark:hover:text-white/75"
-                    href="#"
-                  >
+                  <a className="text-gray-500 hover:text-black" href="#">
                     Sản Phẩm
                   </a>
                 </li>
 
                 <li>
-                  <a
-                    className="text-gray-500 transition hover:text-gray-500/75 dark:text-white dark:hover:text-white/75"
-                    href="#"
-                  >
+                  <a className="text-gray-500 hover:text-black" href="#">
                     Tin Tức
                   </a>
                 </li>
 
                 <li>
-                  <a
-                    className="text-gray-500 transition hover:text-gray-500/75 dark:text-white dark:hover:text-white/75"
-                    href="#"
-                  >
+                  <a className="text-gray-500 hover:text-black" href="#">
                     Liên Hệ
                   </a>
                 </li>
 
                 <li>
-                  <a
-                    className="text-gray-500 transition hover:text-gray-500/75 dark:text-white dark:hover:text-white/75"
-                    href="#"
-                  >
+                  <a className="text-gray-500 hover:text-black" href="#">
                     Giới Thiệu
                   </a>
                 </li>

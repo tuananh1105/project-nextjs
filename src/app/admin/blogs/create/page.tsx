@@ -67,7 +67,7 @@ export default function CreateBlog() {
       <h1 className="text-xl mb-4">Thêm mới tin tức</h1>
       <div className="bg-white p-6 rounded-lg">
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="flex justify-between gap-5">
+          <div className="flex gap-3 flex-col lg:flex-row lg:gap-5 lg:justify-between">
             <div className="max-w-full w-full">
               <Label>
                 <span className="text-red-500">*</span>Title
@@ -94,7 +94,7 @@ export default function CreateBlog() {
             </div>
           </div>
 
-          <div className="flex justify-between gap-5 mt-4">
+          <div className="lg:flex-row lg:justify-between flex gap-3 flex-col lg:gap-5 mt-3">
             <div className="max-w-full w-full">
               <Label>
                 <span className="text-red-500">*</span>Thumbnail
@@ -181,9 +181,11 @@ export default function CreateBlog() {
             />
           </div>
 
-          <Button className="mt-4" type="primary" htmlType="submit">
-            Thêm mới
-          </Button>
+          <div className="flex justify-end">
+            <Button className="mt-4" type="primary" htmlType="submit">
+              Thêm mới
+            </Button>
+          </div>
         </form>
       </div>
     </div>

@@ -63,7 +63,7 @@ export default function ProductForm({
 
   return (
     <>
-      <div className="flex justify-between gap-5">
+      <div className="flex gap-3 flex-col lg:flex-row lg:gap-5 lg:justify-between ">
         <div className="max-w-full w-full">
           <Label>
             <span className="text-red-500">*</span>Name
@@ -104,7 +104,7 @@ export default function ProductForm({
         </div>
       </div>
 
-      <div className="flex justify-between gap-5 mt-5">
+      <div className="lg:flex-row lg:justify-between flex gap-3 flex-col lg:gap-5 mt-3">
         <div className="max-w-full w-full">
           <Label>
             <span className="text-red-500">*</span>Price
@@ -135,7 +135,7 @@ export default function ProductForm({
         </div>
       </div>
 
-      <div className="flex justify-between gap-5 mt-5">
+      <div className="lg:flex-row lg:justify-between flex gap-3 flex-col lg:gap-5 mt-3">
         <div className="max-w-full w-full">
           <Label>
             <span className="text-red-500">*</span>Image
@@ -186,7 +186,7 @@ export default function ProductForm({
           control={control}
           render={({ field }) => (
             <Editor
-              apiKey="vx5npguuuktlxhbv9tv6vvgjk1x5astnj8kznhujei9w6ech"
+              apiKey={process.env.VITE_TINYMCE_API_KEY}
               value={field.value}
               onEditorChange={field.onChange}
               init={{

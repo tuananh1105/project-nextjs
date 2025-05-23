@@ -13,7 +13,7 @@ type Variant = {
 
 
 type Product = {
-   _id: string;
+    _id: string;
     name: string;
     slug: string;
     category: Categories;
@@ -61,5 +61,15 @@ type ProductAdmin = {
      detaildescription: string;
      hasVariants: boolean, 
      variants: Variants[];
+ }
+
+
+ type CartProduct = {
+    _id: string;
+    name: string;
+    category: string;
+    price: number;
+    image: string;
+    description: string;
  }
 

@@ -1,5 +1,6 @@
 "use client";
 
+import CardCategory from "@/components/categories/cart-category";
 import { CategoryColumns } from "@/components/categories/columns-category";
 import { useFetchCategory } from "@/data/categories/useCategoryList";
 import useCategoryMutation from "@/data/categories/useCategoryMutation";
@@ -61,28 +62,41 @@ export default function CategoryList() {
   return (
     <div>
       <div className="flex justify-between">
-        <p className="text-xl font-semibold">Danh sách danh mục</p>
+        <p className="ext-[15px] lg:text-xl mt-1 font-semibold">
+          Danh sách danh mục
+        </p>
         <Link href={"/admin/categories/create"}>
           <Button>Thêm danh mục</Button>
         </Link>
       </div>
-      <div className="bg-white p-3 rounded-lg mt-3">
-        <Table<Categories>
-          className={styles.customTable}
-          columns={columns}
-          dataSource={categories}
-          pagination={{
-            current: pagination.current,
-            pageSize: pagination.pageSize,
-            total: categoryList?.meta?.totalItems ?? 0,
-            showSizeChanger: true,
-            pageSizeOptions: [2, 5, 10, 20],
-          }}
-          scroll={{ y: 55 * 5 }}
-          loading={isLoading}
-          rowKey="_id"
-          onChange={handleTableChange}
-        />
+      <div className="lg:bg-white lg:p-3 rounded-lg mt-3">
+        <div className="hidden lg:block">
+          <Table<Categories>
+            className={styles.customTable}
+            columns={columns}
+            dataSource={categories}
+            pagination={{
+              current: pagination.current,
+              pageSize: pagination.pageSize,
+              total: categoryList?.meta?.totalItems ?? 0,
+              showSizeChanger: true,
+              pageSizeOptions: [2, 5, 10, 20],
+            }}
+            scroll={{ y: 55 * 5 }}
+            loading={isLoading}
+            rowKey="_id"
+            onChange={handleTableChange}
+          />
+        </div>
+        <div className="block lg:hidden mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4 justify-items-center">
+          {categories.map((item) => (
+            <CardCategory
+              handleDeleteCategory={() => handleDelete(item._id)}
+              key={item._id}
+              category={item}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );
