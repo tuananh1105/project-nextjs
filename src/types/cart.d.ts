@@ -1,6 +1,4 @@
 type ProductCart = {
-    price: number;
-    description: string;
     productId: string;
     variantId: string;
     quantity: number | string;
