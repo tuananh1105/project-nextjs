@@ -1,12 +1,11 @@
 "use client";
 
+import DropdownUser from "@/components/home/dropdown-user";
+import { Cart } from "@/components/ui/icon";
+import { useFetchCart } from "@/data/cart/useFetchCart";
+import useLogicCart from "@/hooks/cart/useLogicCart";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import useLogicCart from "@/hooks/cart/useLogicCart";
-import { useFetchCart } from "@/data/cart/useFetchCart";
-import { Cart } from "@/components/ui/icon";
-import DropdownUser from "@/components/home/dropdown-user";
 
 export default function Header() {
   const { userId } = useLogicCart();
