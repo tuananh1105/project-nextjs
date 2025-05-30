@@ -43,7 +43,7 @@ export default function OrderReceived() {
           />
         </div>
 
-        <div className="block lg:hidden mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4 justify-items-center">
+        <div className="lg:hidden mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4 justify-items-center">
           {orderList.length > 0 ? (
             <>
               {orderList.map((item: OrderList) => (

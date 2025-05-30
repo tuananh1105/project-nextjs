@@ -93,7 +93,7 @@ export default function SizeList() {
             onChange={handleTableChange}
           />
         </div>
-        <div className="block lg:hidden mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4 justify-items-center">
+        <div className="lg:hidden mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4 justify-items-center">
           {sizes.length > 0 ? (
             <>
               {sizes.map((item) => (

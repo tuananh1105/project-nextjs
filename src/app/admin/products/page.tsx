@@ -80,7 +80,7 @@ export default function ProductList() {
           />
         </div>
 
-        <div className="block lg:hidden mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4 justify-items-center">
+        <div className="lg:hidden mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4 justify-items-center">
           {products.length > 0 ? (
             <>
               {products.map((item) => (
