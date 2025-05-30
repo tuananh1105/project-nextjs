@@ -5,7 +5,7 @@ import { BlogColumns } from "@/components/blog/columns-blog";
 import { useFetchBlog } from "@/data/blog/useBlogList";
 import useBlogMutation from "@/data/blog/useBlogMutation";
 import { useStyle } from "@/utils/helper";
-import { Button, Table, TablePaginationConfig } from "antd";
+import { Button, Empty, Table, TablePaginationConfig } from "antd";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 
@@ -92,13 +92,19 @@ export default function BlogList() {
           />
         </div>
         <div className="block lg:hidden mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4 justify-items-center">
-          {blog.map((item) => (
-            <CardBlog
-              handleDeleteBlog={() => handleDelete(item._id)}
-              key={item._id}
-              blog={item}
-            />
-          ))}
+          {blog.length > 0 ? (
+            <>
+              {blog.map((item) => (
+                <CardBlog
+                  handleDeleteBlog={() => handleDelete(item._id)}
+                  key={item._id}
+                  blog={item}
+                />
+              ))}
+            </>
+          ) : (
+            <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+          )}
         </div>
       </div>
     </div>

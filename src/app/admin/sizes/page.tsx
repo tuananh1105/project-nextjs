@@ -5,7 +5,7 @@ import { SizeColumns } from "@/components/sizes/columns-size";
 import { useFetchSize } from "@/data/size/useFetchSize";
 import useSizeMutation from "@/data/size/useSizeMutation";
 import { useStyle } from "@/utils/helper";
-import { Button, Table, TablePaginationConfig } from "antd";
+import { Button, Empty, Table, TablePaginationConfig } from "antd";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 
@@ -94,13 +94,19 @@ export default function SizeList() {
           />
         </div>
         <div className="block lg:hidden mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4 justify-items-center">
-          {sizes.map((item) => (
-            <CardSize
-              handleDeleteSize={() => handleDelete(item._id)}
-              key={item._id}
-              size={item}
-            />
-          ))}
+          {sizes.length > 0 ? (
+            <>
+              {sizes.map((item) => (
+                <CardSize
+                  handleDeleteSize={() => handleDelete(item._id)}
+                  key={item._id}
+                  size={item}
+                />
+              ))}
+            </>
+          ) : (
+            <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+          )}
         </div>
       </div>
     </div>

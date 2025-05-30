@@ -187,9 +187,9 @@ export default function Cart() {
       <div className="border-b border-t border-gray-200 py-5">
         <p className="text-center text-xl font-semibold">Giỏ Hàng</p>
       </div>
-      <div className="max-w-[1200px] m-auto">
-        <div className="grid grid-cols-12 mt-10 gap-5">
-          <div className="col-span-8 border-[1px] border-gray-300 rounded-2xl p-7 overflow-y-scroll scrollbar-hide h-[500px]">
+      <div className="max-w-[1200px] m-auto p-4">
+        <div className="grid-cols-1 lg:grid lg:grid-cols-12 mt-10 gap-5">
+          <div className="col-span-8 border-[1px] border-gray-300 rounded-2xl p-7 overflow-y-scroll scrollbar-hide h-[300px] lg:h-[500px]">
             <div className="flex items-center space-x-2">
               <input
                 type="checkbox"
@@ -233,7 +233,7 @@ export default function Cart() {
               </Fragment>
             ))}
           </div>
-          <div className="col-span-4 border-[1px] border-gray-300 rounded-xl p-7 h-[330px]">
+          <div className="col-span-4 border-[1px] border-gray-300 rounded-xl p-7 h-[330px] mt-4 lg:mt-0">
             <p className="font-semibold">Chi tiết đơn hàng </p>
             <div className="flex flex-col justify-between mt-3 gap-3">
               <div className=" text-[15px] flex justify-between">

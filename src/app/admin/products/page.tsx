@@ -5,7 +5,7 @@ import { ProductColumns } from "@/components/products/product-admin/columns-prod
 import { useFetchProducts } from "@/data/products/useProductList";
 import useProductMutation from "@/data/products/useProductMutation";
 import { useStyle } from "@/utils/helper";
-import { Button, Table, TablePaginationConfig } from "antd";
+import { Button, Empty, Table, TablePaginationConfig } from "antd";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 
@@ -81,13 +81,19 @@ export default function ProductList() {
         </div>
 
         <div className="block lg:hidden mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4 justify-items-center">
-          {products.map((item) => (
-            <CardProduct
-              handleDeleteProduct={() => hanleDeleteProduct(item._id)}
-              key={item._id}
-              product={item}
-            />
-          ))}
+          {products.length > 0 ? (
+            <>
+              {products.map((item) => (
+                <CardProduct
+                  handleDeleteProduct={() => hanleDeleteProduct(item._id)}
+                  key={item._id}
+                  product={item}
+                />
+              ))}
+            </>
+          ) : (
+            <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+          )}
         </div>
       </div>
     </div>

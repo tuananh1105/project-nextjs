@@ -14,8 +14,8 @@ const ModalContentAddress = () => {
       return;
     }
     await updateStatusAddress.mutateAsync({
-      id: addressId!,
-      userId: userId!,
+      id: addressId,
+      userId: userId,
       isDefault: true,
     });
   };

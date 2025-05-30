@@ -2,7 +2,7 @@ import CurrencyVND, { formatDateTime } from "@/utils/helper";
 import { EyeOutlined } from "@ant-design/icons";
 import { TableColumnsType } from "antd";
 import Link from "next/link";
-import OrderStatusSelector from "./order-status-selector";
+import OrderStatusSelector from "@/components/order/order-status-selector";
 
 export const OrderColumns = (
   updateOrderStatus: (params: { id: string; status: OrderStatus }) => void

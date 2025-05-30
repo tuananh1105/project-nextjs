@@ -101,11 +101,11 @@ const Checkout = () => {
   }
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-12 m-auto max-w-[1200px] gap-3">
+    <div className="grid grid-cols-1 lg:grid-cols-12 m-auto max-w-[1200px] gap-3 p-4">
       <div className="col-span-6 lg:col-span-8">
-        <p className="text-xl">Đơn hàng của tôi</p>
+        <p className="lg:text-xl text-lg">Đơn hàng của tôi</p>
         <div className="mt-4 bg-white px-6 py-3 border border-gray-200 rounded-lg shadow">
-          <p className="text-lg flex gap-2 text-[#FF5B2C]">
+          <p className="lg:text-lg text-md flex gap-2 text-[#FF5B2C]">
             <EnvironmentOutlined />
             Địa chỉ nhận hàng
           </p>
@@ -196,9 +196,9 @@ const Checkout = () => {
         </div>
       </div>
       <div className="col-span-6 lg:col-span-4">
-        <p className="text-xl">Thông tin liên quan</p>
+        <p className="lg:text-xl text-lg">Thông tin liên quan</p>
         <div className="bg-white shadow mt-4 border border-gray-300 rounded-lg px-4 py-7.5">
-          <p className="text-lg">
+          <p className="lg:text-lg text-md">
             <ReconciliationOutlined /> Chi tiết thanh toán
           </p>
           <div className="flex justify-between mt-3">
@@ -225,7 +225,7 @@ const Checkout = () => {
 
         <div className="bg-white shadow border border-gray-300 rounded-lg mt-3">
           <div className="p-4">
-            <p className="text-lg">Phương thức thanh toán</p>
+            <p className="lg:text-lg text-md">Phương thức thanh toán</p>
             <button
               onClick={() => setSelectedMethod("cod")}
               className={`border text-sm font-semibold px-2 rounded-sm py-3 mt-4 max-w-full w-[500px] cursor-pointer

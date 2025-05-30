@@ -5,7 +5,7 @@ import { ColorColumns } from "@/components/colors/columns-color";
 import useColorMutation from "@/data/colors/useColorMutation";
 import { useFetchColor } from "@/data/colors/useFetchColor";
 import { useStyle } from "@/utils/helper";
-import { Button, Table, TablePaginationConfig } from "antd";
+import { Button, Empty, Table, TablePaginationConfig } from "antd";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 
@@ -88,13 +88,19 @@ export default function ColorList() {
           />
         </div>
         <div className="block lg:hidden mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4 justify-items-center">
-          {colors.map((item) => (
-            <CardColor
-              handleDeleteColor={() => handleDelete(item._id)}
-              key={item._id}
-              color={item}
-            />
-          ))}
+          {colors.length > 0 ? (
+            <>
+              {colors.map((item) => (
+                <CardColor
+                  handleDeleteColor={() => handleDelete(item._id)}
+                  key={item._id}
+                  color={item}
+                />
+              ))}
+            </>
+          ) : (
+            <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+          )}
         </div>
       </div>
     </div>

@@ -42,9 +42,10 @@ export default function ProductDetail() {
         <span className="text-black">{productDetail?.product.name}</span>
       </p>
 
-      <div className="max-w-[1100px] m-auto grid grid-cols-12 gap-4 mt-4">
-        <div className="col-span-7 flex gap-2">
-          <div className="flex flex-col gap-3 overflow-y-auto max-h-[500px]">
+      <div className="max-w-[1100px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-4 mt-4 px-4">
+        <div className="lg:col-span-7 flex flex-col lg:flex-row gap-4">
+          {/* Thumbnails */}
+          <div className="flex flex-row lg:flex-col gap-3 overflow-x-auto lg:overflow-y-auto max-h-[500px]">
             {images.map((image, index) => (
               <div
                 key={index}
@@ -60,12 +61,13 @@ export default function ProductDetail() {
                   alt={`gallery-${index}`}
                   width={100}
                   height={100}
-                  className="object-cover w-28 h-36 rounded-lg"
+                  className="object-cover w-24 h-32 rounded-lg"
                 />
               </div>
             ))}
           </div>
 
+          {/* Main Image */}
           <div className="flex items-center justify-center">
             {selectedImage && (
               <Image
@@ -73,13 +75,13 @@ export default function ProductDetail() {
                 alt="selected-product"
                 width={500}
                 height={500}
-                className="rounded-lg object-cover max-h-[500px] w-[500px] h-[700px]"
+                className="rounded-lg object-cover max-h-[500px] w-full h-[400px] md:h-[500px] lg:w-[500px] lg:h-[700px]"
               />
             )}
           </div>
         </div>
 
-        <div className="col-span-5">
+        <div className="lg:col-span-5">
           <span className="font-normal text-2xl">
             <CurrencyVND amount={productDetail?.product.price ?? 0} />
           </span>
@@ -87,13 +89,13 @@ export default function ProductDetail() {
             {productDetail?.product.name}
           </h3>
 
-          <div className="flex justify-between">
+          <div className="flex flex-col sm:flex-row justify-between gap-4">
             <div>
               <div className="mt-5">
-                <p className="text-gray-700 font-normal text-[14px]">
+                <p className="text-gray-700 font-normal text-sm">
                   Màu sắc: {selectedColor}
                 </p>
-                <div className="flex gap-1 mt-2">
+                <div className="flex gap-2 mt-2 flex-wrap">
                   {colorVariants?.map((color) => (
                     <button
                       key={color}
@@ -110,10 +112,10 @@ export default function ProductDetail() {
               </div>
 
               <div className="mt-3">
-                <p className="text-gray-700 font-normal text-[14px]">
+                <p className="text-gray-700 font-normal text-sm">
                   Kích cỡ: {selectedSize}
                 </p>
-                <div className="flex gap-2">
+                <div className="flex gap-2 flex-wrap">
                   {sizeVariants?.map((size) => (
                     <button
                       key={size}
@@ -130,16 +132,19 @@ export default function ProductDetail() {
                 </div>
               </div>
             </div>
+
             <p
-              className="cursor-pointer mt-20 text-blue-900"
+              className="cursor-pointer text-blue-900 mt-4 sm:mt-20"
               onClick={handleOpenModal}
             >
-              Hướng dẫn kích cơ
+              Hướng dẫn kích cỡ
             </p>
           </div>
+
           <ModalSizeGuide isOpen={isModalOpen} isClose={handleCloseModal} />
-          <div className="flex items-center gap-4 mt-4">
-            <div className="flex items-center justify-between px-3 gap-4 border-[1px] border-gray-300 rounded-full w-40 py-2">
+
+          <div className="flex items-center gap-4 mt-6 flex-wrap">
+            <div className="flex items-center justify-between px-3 gap-4 border border-gray-300 rounded-full w-40 py-2">
               <button
                 className="text-gray-500 hover:text-black"
                 onClick={handleReduce}

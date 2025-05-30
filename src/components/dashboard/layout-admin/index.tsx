@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import {
   FileOutlined,
   HighlightOutlined,
@@ -11,7 +12,6 @@ import {
 import { Image, Menu, MenuProps } from "antd";
 import Sider from "antd/es/layout/Sider";
 import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -63,6 +63,20 @@ const Sidebar = () => {
   const router = useRouter();
   const pathname = usePathname();
 
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setCollapsed(true);
+      } else {
+        setCollapsed(false);
+      }
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const onClickMenu: MenuProps["onClick"] = ({ key }) => {
     router.push(key as string);
   };
@@ -86,6 +100,7 @@ const Sidebar = () => {
       collapsible
       collapsed={collapsed}
       onCollapse={(value) => setCollapsed(value)}
+      breakpoint="md"
     >
       <div className="flex justify-center items-center py-3">
         <Image width={40} src="/images/logo_fashion.png" preview={false} />

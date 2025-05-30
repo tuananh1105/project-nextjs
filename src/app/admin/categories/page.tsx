@@ -5,7 +5,7 @@ import { CategoryColumns } from "@/components/categories/columns-category";
 import { useFetchCategory } from "@/data/categories/useCategoryList";
 import useCategoryMutation from "@/data/categories/useCategoryMutation";
 import { useStyle } from "@/utils/helper";
-import { Button, Table, TablePaginationConfig } from "antd";
+import { Button, Empty, Table, TablePaginationConfig } from "antd";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 
@@ -89,13 +89,19 @@ export default function CategoryList() {
           />
         </div>
         <div className="block lg:hidden mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4 justify-items-center">
-          {categories.map((item) => (
-            <CardCategory
-              handleDeleteCategory={() => handleDelete(item._id)}
-              key={item._id}
-              category={item}
-            />
-          ))}
+          {categories.length > 0 ? (
+            <>
+              {categories.map((item) => (
+                <CardCategory
+                  handleDeleteCategory={() => handleDelete(item._id)}
+                  key={item._id}
+                  category={item}
+                />
+              ))}
+            </>
+          ) : (
+            <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+          )}
         </div>
       </div>
     </div>
