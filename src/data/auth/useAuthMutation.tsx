@@ -1,8 +1,10 @@
 import instance from "@/lib/axios-instance";
 import { useMutation } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 
 const useAuthMutation = () => {
+  const router = useRouter();
   const signup = useMutation({
     mutationFn: async (user: Register) => {
       try {
@@ -14,6 +16,7 @@ const useAuthMutation = () => {
     },
     onSuccess: async () => {
       toast.success("Đăng ký thành công!");
+      router.push("/website/login");
     },
   });
 
@@ -29,6 +32,7 @@ const useAuthMutation = () => {
     },
     onSuccess: async () => {
       toast.success("Đăng nhập thành công!");
+      router.push("/website");
     },
   });
 

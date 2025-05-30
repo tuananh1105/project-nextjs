@@ -9,18 +9,10 @@ import { Cart } from "@/components/ui/icon";
 import DropdownUser from "@/components/home/dropdown-user";
 
 export default function Header() {
-  const [token, setToken] = useState(false);
-
   const { userId } = useLogicCart();
 
   const { data: cart } = useFetchCart(userId);
 
-  useEffect(() => {
-    const token = localStorage.getItem("user");
-    if (token) {
-      setToken(true);
-    }
-  }, []);
   return (
     <header className="bg-white">
       <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
@@ -77,7 +69,7 @@ export default function Header() {
 
             <div className="flex items-center gap-4">
               <div className="sm:flex sm:gap-4">
-                {token ? (
+                {userId ? (
                   <div className="flex gap-4">
                     <div className="mt-3 relative">
                       <Link href={"/website/cart"}>
